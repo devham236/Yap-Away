@@ -21,7 +21,7 @@ const HomeContainer = () => {
   useEffect(() => {
     const getChats = async () => {
       const result = await axios.get(
-        `http://localhost:3000/api/v1/chat/chats?username=${userInfo.username}`
+        `/chat/chats?username=${userInfo.username}`
       )
       setChats(result.data.chats)
     }
@@ -31,7 +31,7 @@ const HomeContainer = () => {
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const result = await axios.get("http://localhost:3000/api/v1/user/list")
+        const result = await axios.get("/user/list")
         const filteredList = result.data.usersList.filter(
           (user) => user._id !== userInfo._id
         )
@@ -53,13 +53,10 @@ const HomeContainer = () => {
 
   const createChat = async (user) => {
     try {
-      const result = await axios.post(
-        "http://localhost:3000/api/v1/chat/create",
-        {
-          roomName: `${user.username}_and_${userInfo.username}`,
-          participants: [userInfo, user],
-        }
-      )
+      const result = await axios.post("/chat/create", {
+        roomName: `${user.username}_and_${userInfo.username}`,
+        participants: [userInfo, user],
+      })
       console.log(result)
       setChats((prev) => [...prev, result.data.newChat])
     } catch (error) {
@@ -88,10 +85,7 @@ const HomeContainer = () => {
           new Date(Date.now()).getMinutes(),
       }
       await socket.emit("sendMessage", messageData)
-      const result = await axios.post(
-        "http://localhost:3000/api/v1/chat/sendMessage",
-        { messageData }
-      )
+      const result = await axios.post("/chat/sendMessage", { messageData })
       console.log(result)
       setMessagesArray(result.data.chat.messages)
       setMessage("")
@@ -101,9 +95,7 @@ const HomeContainer = () => {
   const searchUser = async () => {
     if (searchInput !== "") {
       try {
-        const result = await axios.get(
-          `http://localhost:3000/api/v1/user/users?search=${searchInput}`
-        )
+        const result = await axios.get(`/user/users?search=${searchInput}`)
         console.log(result)
         const filteredList = result.data.users.filter(
           (user) => user._id !== userInfo._id
@@ -119,9 +111,7 @@ const HomeContainer = () => {
   const deleteChat = async (chat, event) => {
     event.stopPropagation()
     try {
-      const result = await axios.delete(
-        `http://localhost:3000/api/v1/chat/${chat._id}`
-      )
+      const result = await axios.delete(`/chat/${chat._id}`)
       console.log(result)
       setChats(result.data.chats.length === 0 ? null : result.data.chats)
     } catch (error) {

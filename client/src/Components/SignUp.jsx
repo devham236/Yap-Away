@@ -27,10 +27,7 @@ const SignUp = () => {
     event.preventDefault()
 
     try {
-      const result = await axios.post(
-        "http://localhost:3000/api/v1/user/signup",
-        signupInfo
-      )
+      const result = await axios.post("/user/signup", signupInfo)
       console.log(result)
       const { token } = result.data
       sessionStorage.setItem("token", JSON.stringify(token))

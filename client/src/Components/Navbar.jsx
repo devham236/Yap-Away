@@ -9,7 +9,7 @@ const Navbar = () => {
 
   const logout = () => {
     try {
-      localStorage.removeItem("token")
+      sessionStorage.removeItem("token")
       setUserInfo(null)
       navigate("/login")
     } catch (error) {

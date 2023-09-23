@@ -21,10 +21,7 @@ const Login = () => {
   const login = async (event) => {
     event.preventDefault()
     try {
-      const result = await axios.post(
-        "http://localhost:3000/api/v1/user/login",
-        loginInfo
-      )
+      const result = await axios.post("/user/login", loginInfo)
       console.log(result)
       const { email, username, id, token } = result.data
       sessionStorage.setItem("token", JSON.stringify(token))
