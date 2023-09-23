@@ -1,0 +1,323 @@
+import React, { useEffect, useState } from "react"
+import io from "socket.io-client"
+import useCustomContext from "./../Context/CustomContext"
+import Message from "./Message"
+import ScrollToBottom from "react-scroll-to-bottom"
+import axios from "../axiosConfig"
+
+const socket = io.connect("http://localhost:3000")
+
+const HomeContainer = () => {
+  const { userInfo } = useCustomContext()
+  const [chats, setChats] = useState(null)
+  const [selectedChat, setSelectedChat] = useState(null)
+  const [message, setMessage] = useState("")
+  const [messagesArray, setMessagesArray] = useState([])
+  const [searchInput, setSearchInput] = useState("")
+  const [searchResult, setSearchResult] = useState(null)
+  const [error, setError] = useState(null)
+  const [otherUsers, setOtherUsers] = useState(null)
+
+  useEffect(() => {
+    const getChats = async () => {
+      const result = await axios.get(
+        `http://localhost:3000/api/v1/chat/chats?username=${userInfo.username}`
+      )
+      setChats(result.data.chats)
+    }
+    getChats()
+  }, [])
+
+  useEffect(() => {
+    const getUsers = async () => {
+      try {
+        const result = await axios.get("http://localhost:3000/api/v1/user/list")
+        const filteredList = result.data.usersList.filter(
+          (user) => user._id !== userInfo._id
+        )
+        setOtherUsers(filteredList)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    getUsers()
+  }, [])
+
+  useEffect(() => {
+    socket.on("receiveMessage", (data) => {
+      console.log(data)
+      setMessagesArray((prev) => [...prev, data])
+    })
+  }, [socket])
+
+  const createChat = async (user) => {
+    try {
+      const result = await axios.post(
+        "http://localhost:3000/api/v1/chat/create",
+        {
+          roomName: `${user.username}_and_${userInfo.username}`,
+          participants: [userInfo, user],
+        }
+      )
+      console.log(result)
+      setChats((prev) => [...prev, result.data.newChat])
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const joinRoom = async (chat) => {
+    if (!selectedChat) {
+      await socket.emit("joinRoom", chat.roomName)
+      setSelectedChat(chat)
+    } else {
+      console.error("No chats")
+    }
+  }
+
+  const sendMessage = async () => {
+    if (message !== "") {
+      const messageData = {
+        room: selectedChat.roomName,
+        author: userInfo.username,
+        content: message,
+        timestamp:
+          new Date(Date.now()).getHours() +
+          ":" +
+          new Date(Date.now()).getMinutes(),
+      }
+      await socket.emit("sendMessage", messageData)
+      const result = await axios.post(
+        "http://localhost:3000/api/v1/chat/sendMessage",
+        { messageData }
+      )
+      console.log(result)
+      setMessagesArray(result.data.chat.messages)
+      setMessage("")
+    }
+  }
+
+  const searchUser = async () => {
+    if (searchInput !== "") {
+      try {
+        const result = await axios.get(
+          `http://localhost:3000/api/v1/user/users?search=${searchInput}`
+        )
+        console.log(result)
+        const filteredList = result.data.users.filter(
+          (user) => user._id !== userInfo._id
+        )
+        setSearchResult(filteredList)
+      } catch (error) {
+        console.log(error)
+        setError(error.response.data.message)
+      }
+    }
+  }
+
+  const deleteChat = async (chat, event) => {
+    event.stopPropagation()
+    try {
+      const result = await axios.delete(
+        `http://localhost:3000/api/v1/chat/${chat._id}`
+      )
+      console.log(result)
+      setChats(result.data.chats.length === 0 ? null : result.data.chats)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  return (
+    <div className="w-full h-[calc(100%-80px)] rounded-b-2xl flex">
+      {/*Sidebar */}
+      <div className="w-[30%] border-r-2 border-slate-200 max-h-full overflow-auto">
+        <div className="w-full h-16 border-b-[1px] border-slate-200 flex items-center justify-between p-3">
+          <input
+            type="text"
+            placeholder="Search for Users..."
+            className=" outline-none"
+            onChange={(event) => {
+              setSearchInput(event.target.value)
+              setError(null)
+            }}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                searchUser()
+              }
+            }}
+          />
+          <button
+            onClick={searchUser}
+            className="px-4 py-2 rounded-lg bg-slate-200 font-bold hover:bg-blue-600 hover:text-white duration-300"
+          >
+            Search
+          </button>
+        </div>
+        <div className="w-full flex flex-col">
+          <div className="w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 flex items-center">
+            <h1 className="font-bold text-lg">
+              Search <span className="text-blue-600">Results:</span>
+            </h1>
+          </div>
+          {searchResult &&
+            searchResult.map((user) => (
+              <div
+                key={user._id}
+                className={`w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 flex items-center`}
+              >
+                <img
+                  src={user.image}
+                  className="w-[55px] h-full object-cover rounded-full mr-2"
+                  alt=""
+                />
+                <div className="ml-2 flex w-full items-center justify-between">
+                  <div className="">
+                    <p className="font-bold">{user.username}</p>
+                  </div>
+                  <div
+                    onClick={() => createChat(user)}
+                    className="opacity-50 hover:text-blue-600 hover:border-blue-600 hover:opacity-100 cursor-pointer duration-300 border-[3px] border-slate-200 flex items-center justify-center p-2 rounded-lg"
+                  >
+                    <i className="fa-solid fa-plus text-md"></i>
+                  </div>
+                </div>
+              </div>
+            ))}
+          {error && (
+            <div className="w-full h-[80px] duration-300 p-3 border-b-2 cursor-pointer border-slate-200 flex items-center">
+              <p className="italic text-slate-500">{error}...</p>
+            </div>
+          )}
+          <div className="w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 flex items-center">
+            <h1 className="font-bold text-lg">
+              Your <span className="text-blue-600">Chats:</span>
+            </h1>
+          </div>
+          {chats &&
+            chats.map((chat) => (
+              <div
+                onClick={() => joinRoom(chat)}
+                key={chat._id}
+                className={`w-full h-[80px] hover:bg-slate-100 duration-300 p-3 border-b-2 cursor-pointer border-slate-200 flex items-center ${
+                  selectedChat?._id === chat._id
+                    ? "border-[2px] border-blue-600"
+                    : ""
+                }`}
+              >
+                <img
+                  src={userInfo.image}
+                  className="w-[55px] h-full object-cover rounded-full mr-2"
+                  alt=""
+                />
+                <div className="ml-2 flex w-full items-center justify-between">
+                  <div className="">
+                    <div className="flex">
+                      {chat.participants.map((p, i) => (
+                        <h2 key={i} className="font-bold mr-2 last:mr-0">
+                          {p.username}
+                        </h2>
+                      ))}
+                    </div>
+                    <p className="text-sm opacity-50">Room: {chat.roomName}</p>
+                  </div>
+                  <div
+                    onClick={(event) => deleteChat(chat, event)}
+                    className="opacity-50 hover:text-white hover:bg-blue-600 hover:opacity-100 cursor-pointer duration-300 bg-slate-200 px-2 flex items-center justify-center py-2 rounded-full"
+                  >
+                    <i className="fa-solid fa-trash-can text-md"></i>
+                  </div>
+                </div>
+              </div>
+            ))}
+          <div className="w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 flex items-center">
+            <h1 className="font-bold text-lg">
+              Other <span className="text-blue-600">Users:</span>
+            </h1>
+          </div>
+          {otherUsers &&
+            otherUsers.map((user) => (
+              <div
+                key={user._id}
+                className={`w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 flex items-center`}
+              >
+                <img
+                  src={user.image}
+                  className="w-[55px] h-full object-cover rounded-full mr-2"
+                  alt=""
+                />
+                <div className="ml-2 flex w-full items-center justify-between">
+                  <div className="">
+                    <p className="font-bold">{user.username}</p>
+                  </div>
+                  <div
+                    onClick={() => createChat(user)}
+                    className=" hover:text-blue-600 hover:border-blue-600 cursor-pointer duration-300 border-[3px] border-slate-200 flex items-center justify-center p-2 rounded-lg"
+                  >
+                    {chats?.find((chat) =>
+                      chat.roomName.includes(user.username)
+                    ) ? (
+                      <i className="fa-solid fa-check text-blue-600"></i>
+                    ) : (
+                      <i className="fa-solid fa-plus"></i>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>
+
+      {/*ChatElement */}
+      {selectedChat ? (
+        <div className="w-[70%] h-full">
+          <div className="w-full h-[calc(100%-80px)]">
+            <div className="w-full h-16 border-b-[1px] border-slate-200 p-3 flex items-center">
+              <h2 className="font-semibold">Room: {selectedChat.roomName}</h2>
+            </div>
+            <ScrollToBottom className="w-full max-h-[calc(100%-64px)] overflow-auto p-3 flex flex-col">
+              {messagesArray?.map((message, i) => (
+                <Message message={message} key={i} />
+              ))}
+            </ScrollToBottom>
+          </div>
+          <div className="w-full py-3 h-[80px] border-t-[1px] border-slate-200 px-3">
+            <div className="w-full h-full flex items-center">
+              <input
+                type="text"
+                name="message"
+                value={message}
+                placeholder="Message..."
+                onChange={(event) => setMessage(event.target.value)}
+                onKeyDown={(e) => {
+                  e.key === "Enter" && sendMessage()
+                }}
+                className="w-full h-full px-3 rounded-lg bg-slate-200 outline-none"
+              />
+              <div className="bg-slate-200 ml-2 h-full flex items-center justify-center px-4 rounded-lg cursor-pointer hover:shadow-lg duration-200">
+                <i className="fa-solid fa-paperclip"></i>
+              </div>
+              <div
+                className="bg-blue-600 ml-2 h-full flex items-center justify-center px-4 rounded-lg cursor-pointer hover:shadow-lg duration-200"
+                onClick={sendMessage}
+              >
+                <i className="fa-solid fa-paper-plane text-white"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="w-[70%] h-full flex items-center justify-center">
+          <div className="w-[500px] h-[300px] bg-slate-200 rounded-lg flex items-center justify-center">
+            <h1 className="font-bold text-lg">
+              Select a chat to start texting.
+            </h1>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default HomeContainer
