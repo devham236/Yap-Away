@@ -1,11 +1,11 @@
 import axios from "axios"
 import React, { createContext, useEffect, useState } from "react"
-import { io } from "socket.io-client"
 
 const Context = createContext()
 
 const ContextProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null)
+  const [darkMode, setDarkMode] = useState(false)
 
   useEffect(() => {
     const token = JSON.parse(sessionStorage.getItem("token"))
@@ -32,6 +32,8 @@ const ContextProvider = ({ children }) => {
       value={{
         userInfo,
         setUserInfo,
+        darkMode,
+        setDarkMode,
       }}
     >
       {children}

@@ -42,29 +42,31 @@ const SignUp = () => {
 
   return (
     <div className="w-full h-full flex items-center">
-      <form className="w-96 mx-auto p-14 border-2 rounded-xl">
+      <form className="w-96 mx-auto p-14 rounded-xl bg-slate-300 dark:bg-slate-900">
         <div className="flex flex-col items-center justify mb-6">
-          <h1 className="font-bold text-2xl text-center">Sign up</h1>
+          <h1 className="font-bold text-2xl text-center dark:text-white">
+            Sign up
+          </h1>
         </div>
         <input
           type="text"
           name="username"
           placeholder="Username"
-          className="block w-full mb-6 p-3 rounded-md bg-slate-200 outline:border-blue-600 outline-blue-600"
+          className="block w-full mb-6 p-3 rounded-md bg-slate-100 dark:bg-slate-400 dark:placeholder:text-black dark:placeholder:text-opacity-50  outline:border-blue-600 outline-blue-600 dark:outline-none"
           onChange={handleChange}
         />
         <input
           type="email"
           name="email"
           placeholder="E-Mail"
-          className="block w-full mb-6 p-3 rounded-md bg-slate-200 outline:border-blue-600 outline-blue-600"
+          className="block w-full mb-6 p-3 rounded-md bg-slate-100 dark:bg-slate-400 dark:placeholder:text-black dark:placeholder:text-opacity-50  outline:border-blue-600 outline-blue-600 dark:outline-none"
           onChange={handleChange}
         />
         <input
           type="password"
           name="password"
           placeholder="Password"
-          className="block w-full mb-6 p-3 rounded-md bg-slate-200 outline:border-blue-600 outline-blue-600"
+          className="block w-full mb-6 p-3 rounded-md bg-slate-100 dark:bg-slate-400 dark:placeholder:text-black dark:placeholder:text-opacity-50  outline:border-blue-600 outline-blue-600 dark:outline-none"
           onChange={handleChange}
         />
         <button
@@ -74,7 +76,7 @@ const SignUp = () => {
         >
           Sign Up
         </button>
-        <p className="text-sm text-center">
+        <p className="text-sm text-center dark:text-white">
           Already have an Account?
           <Link
             to="/login"

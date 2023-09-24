@@ -1,10 +1,10 @@
-import React, { useContext } from "react"
+import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import me from "../Images/me.png"
 import useCustomContext from "../Context/CustomContext"
+import { motion } from "framer-motion"
 
 const Navbar = () => {
-  const { userInfo, setUserInfo } = useCustomContext()
+  const { userInfo, setUserInfo, darkMode, setDarkMode } = useCustomContext()
   const navigate = useNavigate()
 
   const logout = () => {
@@ -17,13 +17,19 @@ const Navbar = () => {
     }
   }
 
+  const spring = {
+    type: "spring",
+    stiffness: 700,
+    damping: 30,
+  }
+
   return (
-    <div className="w-full h-20 p-3 rounded-tr-2xl rounded-tl-2xl border-b-2 border-slate-200">
+    <div className="w-full h-20 p-3 rounded-tr-2xl rounded-tl-2xl border-b-2 border-slate-200 dark:border-slate-900">
       <div className="w-full h-full flex items-center justify-between">
-        <div className="flex h-full items-center justify-between w-[30%]">
+        <div className="flex h-full items-center justify-between">
           <Link
             to="/"
-            className="w-[55px] p-1 h-full bg-slate-200 hover:bg-blue-600 duration-200 rounded-full flex items-center justify-center cursor-pointer"
+            className="w-[55px] p-1 mr-2 h-full bg-slate-200 hover:bg-blue-600 duration-200 rounded-full flex items-center justify-center cursor-pointer"
           >
             <img
               src={
@@ -33,29 +39,46 @@ const Navbar = () => {
               className="w-full h-full object-fit rounded-full"
             />
           </Link>
-          <div className="">
-            <h2 className="font-semibold">{userInfo && userInfo.username}</h2>
+          <div
+            onClick={() => setDarkMode(!darkMode)}
+            className={`w-[70px] h-[40px] flex items-center ${
+              darkMode ? "justify-start" : "justify-end"
+            } p-[5px] ml-2 rounded-full bg-slate-300 dark:bg-slate-900 cursor-pointer`}
+          >
+            <motion.div
+              layout
+              transition={spring}
+              className="w-1/2 h-full bg-white rounded-full"
+            ></motion.div>
           </div>
-          <button
-            className="bg-slate-200 p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
-            onClick={logout}
-          >
-            <p className="font-semibold">Logout</p>
-          </button>
         </div>
+        <h1 className="font-bold text-2xl dark:text-white">
+          Chat <span className="text-blue-600">Away.</span>
+        </h1>
         <div className="flex items-center">
-          <Link
-            className="mr-2 bg-slate-200 p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
-            to="/signup"
-          >
-            <p className="font-semibold">Sign Up</p>
-          </Link>
-          <Link
-            className="ml-2 bg-slate-200 p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
-            to="/login"
-          >
-            <p className="font-semibold">Login</p>
-          </Link>
+          {userInfo ? (
+            <button
+              className="bg-slate-200 dark:bg-slate-900 dark:text-white p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
+              onClick={logout}
+            >
+              <p className="font-semibold">Logout</p>
+            </button>
+          ) : (
+            <>
+              <Link
+                className="mr-2 dark:bg-slate-900 dark:text-white bg-slate-200 p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
+                to="/signup"
+              >
+                <p className="font-semibold">Sign Up</p>
+              </Link>
+              <Link
+                className="ml-2 dark:bg-slate-900 dark:text-white bg-slate-200 p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
+                to="/login"
+              >
+                <p className="font-semibold">Login</p>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </div>
