@@ -126,7 +126,7 @@ const HomeContainer = () => {
           <input
             type="text"
             placeholder="Search for Users..."
-            className="bg-transparent outline-none text-white"
+            className="bg-transparent outline-none"
             onChange={(event) => {
               setSearchInput(event.target.value)
               setError(null)
@@ -157,7 +157,9 @@ const HomeContainer = () => {
                 className={`w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 flex items-center`}
               >
                 <img
-                  src={user.image}
+                  src={
+                    "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+                  }
                   className="w-[55px] h-full object-cover rounded-full mr-2"
                   alt=""
                 />
@@ -192,7 +194,9 @@ const HomeContainer = () => {
                 className={`w-full h-[80px] hover:bg-slate-100 dark:hover:bg-slate-900 duration-300 p-3 border-b-2 cursor-pointer border-slate-200 dark:border-slate-900 flex items-center`}
               >
                 <img
-                  src={userInfo.image}
+                  src={
+                    "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+                  }
                   className="w-[55px] h-full object-cover rounded-full mr-2"
                   alt=""
                 />
@@ -233,7 +237,9 @@ const HomeContainer = () => {
                 className={`w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 dark:border-slate-900 flex items-center`}
               >
                 <img
-                  src={user.image}
+                  src={
+                    "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+                  }
                   className="w-[55px] h-full object-cover rounded-full mr-2"
                   alt=""
                 />

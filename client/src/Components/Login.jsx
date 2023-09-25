@@ -23,9 +23,9 @@ const Login = () => {
     try {
       const result = await axios.post("/user/login", loginInfo)
       console.log(result)
-      const { email, username, id, token } = result.data
+      const { email, username, id, token, image } = result.data
       sessionStorage.setItem("token", JSON.stringify(token))
-      setUserInfo({ email, username, id })
+      setUserInfo({ email, username, id, image })
       navigate("/")
     } catch (error) {
       console.log(error)
@@ -62,7 +62,7 @@ const Login = () => {
           Login
         </button>
         <p className="text-sm text-center dark:text-white">
-          New to Chatapp?
+          New to ChatAway?
           <Link
             to="/signup"
             className="text-blue-600 ml-1 cursor-pointer hover:underline hover:underline-offset-2 duration-300"

@@ -1,4 +1,5 @@
 const UserModel = require("../models/UserModel");
+const ImageModel = require("../models/imageModel");
 const genToken = require("../utils/genToken");
 const jwt = require("jsonwebtoken");
 
@@ -18,9 +19,9 @@ const getUserList = async (req, res) => {
 };
 
 const signUp = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, image } = req.body;
   try {
-    const newUser = await UserModel.signup(username, email, password);
+    const newUser = await UserModel.signup(username, email, password, image);
     const token = genToken(newUser._id);
     res.status(200).json({
       username: newUser.username,
@@ -44,6 +45,7 @@ const login = async (req, res) => {
       email: user.email,
       id: user._id,
       token,
+      image: user.image,
     });
   } catch (error) {
     res.status(400).json({ message: error.message });

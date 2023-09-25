@@ -21,14 +21,12 @@ const userSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      default:
-        "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     },
   },
   { timestamps: true }
 );
 
-userSchema.statics.signup = async function (username, email, password) {
+userSchema.statics.signup = async function (username, email, password, image) {
   if (!username || !email || !password) {
     throw Error("All fields must be filled.");
   }
@@ -61,6 +59,7 @@ userSchema.statics.signup = async function (username, email, password) {
     username,
     email,
     password: hashedPassword,
+    image,
   });
 
   return newUser;

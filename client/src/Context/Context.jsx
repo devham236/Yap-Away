@@ -18,6 +18,7 @@ const ContextProvider = ({ children }) => {
             token,
           }
         )
+        console.log(result)
         setUserInfo(result.data._doc)
       } catch (error) {
         console.log(error)
