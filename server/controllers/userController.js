@@ -1,5 +1,4 @@
 const UserModel = require("../models/UserModel");
-const ImageModel = require("../models/imageModel");
 const genToken = require("../utils/genToken");
 const jwt = require("jsonwebtoken");
 
