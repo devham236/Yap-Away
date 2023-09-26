@@ -28,7 +28,6 @@ const signUp = async (req, res) => {
       email: newUser.email,
       id: newUser._id,
       token,
-      image: newUser.image,
     });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -45,7 +44,6 @@ const login = async (req, res) => {
       email: user.email,
       id: user._id,
       token,
-      image: user.image,
     });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -59,7 +57,12 @@ const verifyUser = async (req, res) => {
     jwt.verify(token, process.env.JWT_KEY, async (err, data) => {
       if (err) throw err;
       const matchingUser = await UserModel.findOne({ _id: data.id });
-      res.status(200).json({ ...matchingUser });
+      console.log(matchingUser);
+      res.status(200).json({
+        username: matchingUser.username,
+        email: matchingUser.email,
+        id: matchingUser._id,
+      });
     });
   } else {
     res.status(400).json({ message: "No token provided" });

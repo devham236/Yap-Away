@@ -30,7 +30,7 @@ const HomeContainer = () => {
       try {
         const result = await axios.get("/user/list")
         const filteredList = result.data.usersList.filter(
-          (user) => user._id !== userInfo?._id
+          (user) => user._id !== userInfo?.id
         )
         setOtherUsers(filteredList)
       } catch (error) {

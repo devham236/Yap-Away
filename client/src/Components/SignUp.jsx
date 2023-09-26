@@ -27,18 +27,13 @@ const SignUp = () => {
 
   const signup = async (event) => {
     event.preventDefault()
-    const base64File = await convertToBase64(signupInfo.image)
+    // const base64File = await convertToBase64(signupInfo.image)
     try {
-      const result = await axios.post("/user/signup", {
-        ...signupInfo,
-        image: base64File,
-      })
+      const result = await axios.post("/user/signup", signupInfo)
       console.log(result)
-      const { token } = result.data
-      sessionStorage.setItem("token", JSON.stringify(token))
+      sessionStorage.setItem("token", JSON.stringify(result.data.token))
       setUserInfo(result.data)
       navigate("/")
-      console.log(signupInfo)
     } catch (error) {
       console.log(error)
       setError(error.response.data.message)
@@ -74,14 +69,14 @@ const SignUp = () => {
           className="block w-full mb-6 p-3 rounded-md bg-slate-100 dark:bg-slate-400 dark:placeholder:text-black dark:placeholder:text-opacity-50  outline:border-blue-600 outline-blue-600 dark:outline-none"
           onChange={handleChange}
         />
-        <input
+        {/* <input
           type="file"
           name="image"
           accept=".jpeg, .png, .jpg"
           placeholder="Password"
           className="block w-full mb-6 p-3 rounded-md bg-slate-100 dark:bg-slate-400 dark:placeholder:text-black dark:placeholder:text-opacity-50  outline:border-blue-600 outline-blue-600 dark:outline-none"
           onChange={handleChange}
-        />
+        /> */}
         <button
           className="w-full bg-blue-600 mb-6 text-white p-3 rounded-md hover:shadow-xl duration-300"
           type="submit"

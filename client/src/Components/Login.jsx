@@ -23,9 +23,8 @@ const Login = () => {
     try {
       const result = await axios.post("/user/login", loginInfo)
       console.log(result)
-      const { email, username, id, token, image } = result.data
-      sessionStorage.setItem("token", JSON.stringify(token))
-      setUserInfo({ email, username, id, image })
+      sessionStorage.setItem("token", JSON.stringify(result.data.token))
+      setUserInfo(result.data)
       navigate("/")
     } catch (error) {
       console.log(error)

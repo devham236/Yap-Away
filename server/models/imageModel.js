@@ -10,8 +10,8 @@ const imageSchema = new mongoose.Schema({
   },
 });
 
-imageSchema.statics.storeImage = async function (image) {
-  const newImage = await this.create({ image });
+imageSchema.statics.storeImage = async function (image, id) {
+  const newImage = await this.create({ image, user: id });
 
   return newImage;
 };

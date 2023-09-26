@@ -33,11 +33,10 @@ const Navbar = () => {
           >
             <img
               src={
-                userInfo?.image ||
                 "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
               }
               alt=""
-              className="w-full h-full object-fit rounded-full"
+              className="w-full h-full object-cover rounded-full"
             />
           </Link>
           <div
