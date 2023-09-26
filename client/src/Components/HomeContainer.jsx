@@ -121,8 +121,8 @@ const HomeContainer = () => {
   return (
     <div className="w-full h-[calc(100%-80px)] rounded-b-2xl flex">
       {/*Sidebar*/}
-      <div className="w-[30%] border-r-2 border-slate-200 dark:border-slate-900 max-h-full overflow-auto">
-        <div className="w-full h-16 border-b-[1px] border-slate-200 dark:border-slate-900 flex items-center justify-between p-3">
+      <div className="w-[30%] border-r-2 border-slate-200 dark-border max-h-full overflow-auto">
+        <div className="w-full h-16 border-b-[2px] border-slate-200 dark-border flex items-center justify-between p-3">
           <input
             type="text"
             placeholder="Search for Users..."
@@ -145,7 +145,7 @@ const HomeContainer = () => {
           </button>
         </div>
         <div className="w-full flex flex-col">
-          <div className="w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 dark:border-slate-900 flex items-center">
+          <div className="w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center">
             <h1 className="font-bold text-lg dark:text-white">
               Search <span className="text-blue-600">Results:</span>
             </h1>
@@ -181,7 +181,7 @@ const HomeContainer = () => {
               <p className="italic text-slate-500">{error}...</p>
             </div>
           )}
-          <div className="w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 dark:border-slate-900 flex items-center">
+          <div className="w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center">
             <h1 className="font-bold text-lg dark:text-white">
               Your <span className="text-blue-600">Chats:</span>
             </h1>
@@ -191,7 +191,7 @@ const HomeContainer = () => {
               <div
                 onClick={() => joinRoom(chat)}
                 key={chat._id}
-                className={`w-full h-[80px] hover:bg-slate-100 dark:hover:bg-slate-900 duration-300 p-3 border-b-2 cursor-pointer border-slate-200 dark:border-slate-900 flex items-center`}
+                className={`w-full h-[80px] hover:bg-slate-100 dark:hover:bg-slate-900 duration-300 p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center`}
               >
                 <img
                   src={
@@ -225,7 +225,7 @@ const HomeContainer = () => {
                 </div>
               </div>
             ))}
-          <div className="w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 dark:border-slate-900 flex items-center">
+          <div className="w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center">
             <h1 className="font-bold text-lg dark:text-white">
               Other <span className="text-blue-600">Users:</span>
             </h1>
@@ -234,7 +234,7 @@ const HomeContainer = () => {
             otherUsers.map((user) => (
               <div
                 key={user._id}
-                className={`w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 dark:border-slate-900 flex items-center`}
+                className={`w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center`}
               >
                 <img
                   src={
@@ -273,7 +273,7 @@ const HomeContainer = () => {
       {selectedChat ? (
         <div className="w-[70%] h-full">
           <div className="w-full h-[calc(100%-80px)]">
-            <div className="w-full h-16 border-b-[1px] border-slate-200 dark:border-slate-900 p-3 flex items-center">
+            <div className="w-full h-16 border-b-[1px] border-slate-200 dark-border p-3 flex items-center">
               <h2 className="font-semibold dark:text-white">
                 Room: {selectedChat.roomName}
               </h2>
@@ -284,7 +284,7 @@ const HomeContainer = () => {
               ))}
             </ScrollToBottom>
           </div>
-          <div className="w-full py-3 h-[80px] border-t-[1px] border-slate-200 px-3 dark:border-slate-900">
+          <div className="w-full py-3 h-[80px] border-t-[1px] border-slate-200 px-3 dark-border">
             <div className="w-full h-full flex items-center">
               <input
                 type="text"

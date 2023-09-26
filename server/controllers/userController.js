@@ -57,7 +57,6 @@ const verifyUser = async (req, res) => {
     jwt.verify(token, process.env.JWT_KEY, async (err, data) => {
       if (err) throw err;
       const matchingUser = await UserModel.findOne({ _id: data.id });
-      console.log(matchingUser);
       res.status(200).json({
         username: matchingUser.username,
         email: matchingUser.email,

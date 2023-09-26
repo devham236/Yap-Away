@@ -14,4 +14,8 @@
         align-items: center;
         justify-content: center; 
     }
+
+    .dark-border {
+        @apply dark:border-slate-800
+    }
 }

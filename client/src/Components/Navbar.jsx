@@ -24,7 +24,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className="w-full h-20 p-3 rounded-tr-2xl rounded-tl-2xl border-b-2 border-slate-200 dark:border-slate-900">
+    <div className="w-full h-20 p-3 rounded-tr-2xl rounded-tl-2xl border-b-2 border-slate-200 dark-border">
       <div className="w-full h-full flex items-center justify-between">
         <div className="flex h-full items-center justify-between">
           <Link
