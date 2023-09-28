@@ -29,15 +29,26 @@ const Navbar = () => {
         <div className="flex h-full items-center justify-between">
           <Link
             to="/"
-            className="w-[55px] p-1 mr-2 h-full bg-slate-200 hover:bg-blue-600 duration-200 rounded-full flex items-center justify-center cursor-pointer"
+            className="w-[55px] mr-2 h-full bg-slate-200 rounded-full flex items-center justify-center cursor-pointer"
           >
-            <img
-              src={
-                "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
-              }
-              alt=""
-              className="w-full h-full object-cover rounded-full"
-            />
+            {userInfo ? (
+              <div
+                style={{ backgroundColor: userInfo?.bgColor }}
+                className={`w-full h-full rounded-full flex items-center justify-center`}
+              >
+                <p className="font-bold text-2xl">
+                  {userInfo.username.charAt(0)}
+                </p>
+              </div>
+            ) : (
+              <img
+                src={
+                  "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+                }
+                alt=""
+                className="w-full h-full object-cover rounded-full"
+              />
+            )}
           </Link>
           <div
             onClick={() => setDarkMode(!darkMode)}
@@ -58,7 +69,7 @@ const Navbar = () => {
         <div className="flex items-center">
           {userInfo ? (
             <button
-              className="bg-slate-200 dark:bg-slate-900 dark:text-white p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
+              className="bg-slate-200 dark:bg-slate-900 dark:text-white p-3 rounded-lg duration-300 hover:bg-blue-600 dark-button hover:text-white"
               onClick={logout}
             >
               <p className="font-semibold">Logout</p>
@@ -66,13 +77,13 @@ const Navbar = () => {
           ) : (
             <>
               <Link
-                className="mr-2 dark:bg-slate-900 dark:text-white bg-slate-200 p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
+                className="mr-2 dark:bg-slate-900 dark-button dark:text-white bg-slate-200 p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
                 to="/signup"
               >
                 <p className="font-semibold">Sign Up</p>
               </Link>
               <Link
-                className="ml-2 dark:bg-slate-900 dark:text-white bg-slate-200 p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
+                className="ml-2 dark:bg-slate-900 dark-button dark:text-white bg-slate-200 p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
                 to="/login"
               >
                 <p className="font-semibold">Login</p>

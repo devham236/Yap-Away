@@ -19,15 +19,17 @@ const getUserList = async (req, res) => {
 };
 
 const signUp = async (req, res) => {
-  const { username, email, password, image } = req.body;
+  const { username, email, password, bgColor } = req.body;
+  console.log(req.body);
   try {
-    const newUser = await UserModel.signup(username, email, password, image);
+    const newUser = await UserModel.signup(username, email, password, bgColor);
     const token = genToken(newUser._id);
     res.status(200).json({
       username: newUser.username,
       email: newUser.email,
       id: newUser._id,
       token,
+      bgColor: newUser.bgColor,
     });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -44,6 +46,7 @@ const login = async (req, res) => {
       email: user.email,
       id: user._id,
       token,
+      bgColor: user.bgColor,
     });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -52,7 +55,6 @@ const login = async (req, res) => {
 
 const verifyUser = async (req, res) => {
   const { token } = req.body;
-
   if (token) {
     jwt.verify(token, process.env.JWT_KEY, async (err, data) => {
       if (err) throw err;
@@ -61,6 +63,7 @@ const verifyUser = async (req, res) => {
         username: matchingUser.username,
         email: matchingUser.email,
         id: matchingUser._id,
+        bgColor: matchingUser.bgColor,
       });
     });
   } else {

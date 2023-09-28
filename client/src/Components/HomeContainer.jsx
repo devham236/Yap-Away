@@ -18,6 +18,8 @@ const HomeContainer = () => {
   const [message, setMessage] = useState("")
   const [messagesArray, setMessagesArray] = useState([])
 
+  console.log(userInfo)
+
   useEffect(() => {
     socket.on("receiveMessage", (data) => {
       console.log(data)
@@ -40,6 +42,8 @@ const HomeContainer = () => {
     getUsers()
   }, [])
 
+  console.log(otherUsers)
+
   useEffect(() => {
     const getChats = async () => {
       const result = await axios.get(
@@ -48,7 +52,7 @@ const HomeContainer = () => {
       setChats(result.data.chats)
     }
     getChats()
-  }, [chats])
+  }, [])
 
   const searchUser = async () => {
     if (searchInput !== "") {
@@ -139,7 +143,7 @@ const HomeContainer = () => {
           />
           <button
             onClick={searchUser}
-            className="px-4 py-2 rounded-lg bg-slate-200 font-bold hover:bg-blue-600 dark:bg-slate-900 dark:text-white hover:text-white duration-300"
+            className="px-4 py-2 rounded-lg bg-slate-200 font-bold hover:bg-blue-600 dark:bg-slate-900 dark:text-white hover:text-white duration-300 dark-button"
           >
             Search
           </button>
@@ -203,14 +207,16 @@ const HomeContainer = () => {
                 <div className="ml-2 flex w-full items-center justify-between">
                   <div className="">
                     <div className="flex">
-                      {chat.participants.map((p, i) => (
-                        <h2
-                          key={i}
-                          className="font-bold mr-2 last:mr-0 dark:text-white"
-                        >
-                          {p.username}
-                        </h2>
-                      ))}
+                      {chat.participants
+                        .filter((participant) => participant.id !== userInfo.id)
+                        .map((p, i) => (
+                          <h2
+                            key={i}
+                            className="font-bold mr-2 last:mr-0 dark:text-white"
+                          >
+                            {p.username}
+                          </h2>
+                        ))}
                     </div>
                     <p className="text-sm opacity-50 dark:text-white">
                       Room: {chat.roomName}
@@ -236,13 +242,14 @@ const HomeContainer = () => {
                 key={user._id}
                 className={`w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center`}
               >
-                <img
-                  src={
-                    "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
-                  }
-                  className="w-[55px] h-full object-cover rounded-full mr-2"
-                  alt=""
-                />
+                <div
+                  style={{ backgroundColor: user.bgColor }}
+                  className={`w-[65px] h-full rounded-full flex items-center justify-center`}
+                >
+                  <p className="font-bold text-2xl">
+                    {user.username.charAt(0)}
+                  </p>
+                </div>
                 <div className="ml-2 flex w-full items-center justify-between">
                   <div className="">
                     <p className="font-bold dark:text-white">{user.username}</p>

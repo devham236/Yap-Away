@@ -18,4 +18,8 @@
     .dark-border {
         @apply dark:border-slate-800
     }
+
+    .dark-button{
+        @apply dark:hover:shadow-xl
+    }
 }

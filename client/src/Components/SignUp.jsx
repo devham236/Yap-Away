@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
 import useCustomContext from "./../Context/CustomContext"
-import convertToBase64 from "../Utils/convertToBase64"
+import genHexCode from "./../Utils/genHexCode"
 
 const SignUp = () => {
   const { userInfo, setUserInfo } = useCustomContext()
@@ -10,26 +10,26 @@ const SignUp = () => {
     username: "",
     email: "",
     password: "",
-    image: "",
   })
   const [error, setError] = useState("")
   const navigate = useNavigate()
 
   const handleChange = async (event) => {
-    const { name, value, files } = event.target
+    const { name, value } = event.target
     setError("")
     setSignUpInfo((prevInfo) => ({
       ...prevInfo,
       [name]: value,
-      image: files ? files[0] : "",
     }))
   }
 
   const signup = async (event) => {
     event.preventDefault()
-    // const base64File = await convertToBase64(signupInfo.image)
     try {
-      const result = await axios.post("/user/signup", signupInfo)
+      const result = await axios.post("/user/signup", {
+        ...signupInfo,
+        bgColor: genHexCode(),
+      })
       console.log(result)
       sessionStorage.setItem("token", JSON.stringify(result.data.token))
       setUserInfo(result.data)
@@ -73,7 +73,6 @@ const SignUp = () => {
           type="file"
           name="image"
           accept=".jpeg, .png, .jpg"
-          placeholder="Password"
           className="block w-full mb-6 p-3 rounded-md bg-slate-100 dark:bg-slate-400 dark:placeholder:text-black dark:placeholder:text-opacity-50  outline:border-blue-600 outline-blue-600 dark:outline-none"
           onChange={handleChange}
         /> */}

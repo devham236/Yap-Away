@@ -19,14 +19,19 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // image: {
-    //   type: String,
-    // },
+    bgColor: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
 
-userSchema.statics.signup = async function (username, email, password, image) {
+userSchema.statics.signup = async function (
+  username,
+  email,
+  password,
+  bgColor
+) {
   if (!username || !email || !password) {
     throw Error("All fields must be filled.");
   }
@@ -59,7 +64,7 @@ userSchema.statics.signup = async function (username, email, password, image) {
     username,
     email,
     password: hashedPassword,
-    image,
+    bgColor,
   });
 
   return newUser;
