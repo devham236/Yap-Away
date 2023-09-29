@@ -13,12 +13,9 @@ const ContextProvider = ({ children }) => {
 
     const verifyUser = async () => {
       try {
-        const result = await axios.post(
-          "http://localhost:3000/api/v1/user/verify",
-          {
-            token,
-          }
-        )
+        const result = await axios.post("/user/verify", {
+          token,
+        })
         setUserInfo(result.data)
       } catch (error) {
         console.log(error)
