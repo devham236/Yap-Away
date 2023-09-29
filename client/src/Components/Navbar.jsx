@@ -36,7 +36,10 @@ const Navbar = () => {
                 style={{ backgroundColor: userInfo?.bgColor }}
                 className={`w-full h-full rounded-full flex items-center justify-center`}
               >
-                <p className="font-bold text-2xl">
+                <p
+                  style={{ textShadow: "0px 0px 8px #000" }}
+                  className="font-bold text-white text-2xl"
+                >
                   {userInfo.username.charAt(0)}
                 </p>
               </div>
