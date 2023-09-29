@@ -8,12 +8,12 @@ const {
   deleteChat,
 } = require("../controllers/chatController");
 
-chatRouter.post("/create", createChat);
+chatRouter.post("/create", verify, createChat);
 
-chatRouter.get("/chats", getChats);
+chatRouter.get("/chats", verify, getChats);
 
-chatRouter.post("/sendMessage", sendMessage);
+chatRouter.post("/sendMessage", verify, sendMessage);
 
-chatRouter.delete("/:id", deleteChat);
+chatRouter.delete("/:id", verify, deleteChat);
 
 module.exports = chatRouter;

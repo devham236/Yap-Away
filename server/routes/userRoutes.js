@@ -9,9 +9,9 @@ const {
   verifyUser,
 } = require("../controllers/userController");
 
-userRouter.get("/users", getUser);
+userRouter.get("/users", verify, getUser);
 
-userRouter.get("/list", getUserList);
+userRouter.get("/list", verify, getUserList);
 
 userRouter.post("/signup", signUp);
 
