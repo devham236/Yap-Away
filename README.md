@@ -102,6 +102,6 @@ Happy Coding!
 
 
 ## License
-This project is licensed under the MIT License - see the (https://www.mit.edu/~amini/LICENSE.md) for details.
+This project is licensed under the MIT License - see https://www.mit.edu/~amini/LICENSE.md for details.
 
 
