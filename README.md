@@ -1,4 +1,4 @@
-# Chat Away
+# Chat Away ✉️📬✏️
 
 Welcome to Chat Away! A real-time messaging application using the popular MERN tech stack.
 
@@ -97,7 +97,7 @@ Your feedback and suggestions to improve this Netflix Clone project is more than
 
 Feel free to open Github issues or reach out with your feedback and contributions. I appreciate your support in making this project even better.
 
-Happy Coding!
+Happy Coding!🚀
 
 
 
