@@ -30,7 +30,7 @@ const HomeContainer = () => {
       try {
         const result = await axios.get("/user/list")
         const filteredList = result.data.usersList.filter(
-          (user) => user._id !== userInfo?.id
+          (user) => user._id !== userInfo?._id
         )
         setOtherUsers(filteredList)
       } catch (error) {
@@ -152,13 +152,17 @@ const HomeContainer = () => {
                 key={user._id}
                 className={`w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 flex items-center`}
               >
-                <img
-                  src={
-                    "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
-                  }
-                  className="w-[55px] h-full object-cover rounded-full mr-2"
-                  alt=""
-                />
+                <div
+                  style={{ backgroundColor: user.bgColor }}
+                  className={`w-[65px] h-full rounded-full flex items-center justify-center`}
+                >
+                  <p
+                    style={{ textShadow: "0px 0px 8px #000" }}
+                    className="font-semibold text-white text-2xl"
+                  >
+                    {user.username.charAt(0)}
+                  </p>
+                </div>
                 <div className="ml-2 flex w-full items-center justify-between">
                   <div className="">
                     <p className="font-bold">{user.username}</p>
@@ -189,18 +193,33 @@ const HomeContainer = () => {
                 key={chat._id}
                 className={`w-full h-[80px] hover:bg-slate-100 dark:hover:bg-slate-900 duration-300 p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center`}
               >
-                <img
-                  src={
-                    "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
-                  }
-                  className="w-[55px] h-full object-cover rounded-full mr-2"
-                  alt=""
-                />
+                <div className="w-[70px] h-full relative">
+                  {chat.participants.map((p, i) => (
+                    <div
+                      style={{ backgroundColor: p.bgColor }}
+                      key={i}
+                      className={`w-[70%] h-[70%] rounded-full flex items-center justify-center absolute ${
+                        p._id === userInfo._id
+                          ? "top-0 left-0"
+                          : "bottom-0 right-0 z-30"
+                      }`}
+                    >
+                      <p
+                        className="font-bold text-2xl text-white"
+                        style={{ textShadow: "0px 0px 8px #000" }}
+                      >
+                        {p.username.charAt(0)}
+                      </p>
+                    </div>
+                  ))}
+                </div>
                 <div className="ml-2 flex w-full items-center justify-between">
                   <div className="">
                     <div className="flex">
                       {chat.participants
-                        .filter((participant) => participant.id !== userInfo.id)
+                        .filter(
+                          (participant) => participant._id !== userInfo._id
+                        )
                         .map((p, i) => (
                           <h2
                             key={i}
@@ -238,7 +257,10 @@ const HomeContainer = () => {
                   style={{ backgroundColor: user.bgColor }}
                   className={`w-[65px] h-full rounded-full flex items-center justify-center`}
                 >
-                  <p className="font-bold text-2xl">
+                  <p
+                    className="font-bold text-2xl text-white"
+                    style={{ textShadow: "0px 0px 8px #000" }}
+                  >
                     {user.username.charAt(0)}
                   </p>
                 </div>
@@ -296,9 +318,6 @@ const HomeContainer = () => {
                 }}
                 className="w-full h-full px-3 rounded-lg bg-slate-200 dark:bg-slate-900 outline-none dark:text-white"
               />
-              <div className="bg-slate-200 dark:bg-slate-900 ml-2 h-full flex items-center justify-center px-4 rounded-lg cursor-pointer hover:shadow-lg duration-200">
-                <i className="fa-solid fa-paperclip dark:text-white"></i>
-              </div>
               <div
                 className="bg-blue-600 ml-2 h-full flex items-center justify-center px-4 rounded-lg cursor-pointer hover:shadow-lg duration-200"
                 onClick={sendMessage}

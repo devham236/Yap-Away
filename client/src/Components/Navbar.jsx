@@ -38,7 +38,7 @@ const Navbar = () => {
               >
                 <p
                   style={{ textShadow: "0px 0px 8px #000" }}
-                  className="font-bold text-white text-2xl"
+                  className="font-semibold text-white text-2xl"
                 >
                   {userInfo.username.charAt(0)}
                 </p>

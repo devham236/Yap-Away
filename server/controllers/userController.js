@@ -26,7 +26,7 @@ const signUp = async (req, res) => {
     res.status(200).json({
       username: newUser.username,
       email: newUser.email,
-      id: newUser._id,
+      _id: newUser._id,
       token,
       bgColor: newUser.bgColor,
     });
@@ -43,7 +43,7 @@ const login = async (req, res) => {
     res.status(200).json({
       username: user.username,
       email: user.email,
-      id: user._id,
+      _id: user._id,
       token,
       bgColor: user.bgColor,
     });
@@ -61,7 +61,7 @@ const verifyUser = async (req, res) => {
       res.status(200).json({
         username: matchingUser.username,
         email: matchingUser.email,
-        id: matchingUser._id,
+        _id: matchingUser._id,
         bgColor: matchingUser.bgColor,
       });
     });
