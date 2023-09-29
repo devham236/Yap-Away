@@ -18,8 +18,6 @@ const HomeContainer = () => {
   const [message, setMessage] = useState("")
   const [messagesArray, setMessagesArray] = useState([])
 
-  console.log(userInfo)
-
   useEffect(() => {
     socket.on("receiveMessage", (data) => {
       console.log(data)
@@ -42,8 +40,6 @@ const HomeContainer = () => {
     getUsers()
   }, [])
 
-  console.log(otherUsers)
-
   useEffect(() => {
     const getChats = async () => {
       const result = await axios.get(
@@ -58,7 +54,6 @@ const HomeContainer = () => {
     if (searchInput !== "") {
       try {
         const result = await axios.get(`/user/users?search=${searchInput}`)
-        console.log(result)
         const filteredList = result.data.users.filter(
           (user) => user._id !== userInfo._id
         )
@@ -76,7 +71,6 @@ const HomeContainer = () => {
         roomName: `${user.username}_and_${userInfo.username}`,
         participants: [userInfo, user],
       })
-      console.log(result)
       setChats((prev) => [...prev, result.data.newChat])
     } catch (error) {
       console.log(error)
@@ -96,7 +90,6 @@ const HomeContainer = () => {
     event.stopPropagation()
     try {
       const result = await axios.delete(`/chat/${chat._id}`)
-      console.log(result)
       setChats(result.data.chats.length === 0 ? null : result.data.chats)
     } catch (error) {
       console.log(error)
@@ -116,7 +109,6 @@ const HomeContainer = () => {
       }
       await socket.emit("sendMessage", messageData)
       const result = await axios.post("/chat/sendMessage", { messageData })
-      console.log(result)
       setMessagesArray(result.data.chat.messages)
       setMessage("")
     }

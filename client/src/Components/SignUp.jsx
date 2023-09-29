@@ -30,7 +30,6 @@ const SignUp = () => {
         ...signupInfo,
         bgColor: genHexCode(),
       })
-      console.log(result)
       sessionStorage.setItem("token", JSON.stringify(result.data.token))
       setUserInfo(result.data)
       navigate("/")

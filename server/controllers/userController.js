@@ -20,7 +20,6 @@ const getUserList = async (req, res) => {
 
 const signUp = async (req, res) => {
   const { username, email, password, bgColor } = req.body;
-  console.log(req.body);
   try {
     const newUser = await UserModel.signup(username, email, password, bgColor);
     const token = genToken(newUser._id);
