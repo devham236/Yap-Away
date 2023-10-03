@@ -81,7 +81,11 @@ npm run dev
 
 ## Demo/Preview
 
-https://github.com/devham236/chat-app/assets/90037750/608d7d62-aa95-4cba-9029-d94e85405cc1
+
+https://github.com/devham236/chat-app/assets/90037750/038be362-f18a-4c52-b4ac-10a059675691
+
+
+
 
 
 
