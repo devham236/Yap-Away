@@ -26,7 +26,11 @@ const Navbar = () => {
   return (
     <div className="w-full h-20 p-3 rounded-tr-2xl rounded-tl-2xl border-b-2 border-slate-200 dark-border">
       <div className="w-full h-full flex items-center justify-between">
-        <div className="flex h-full items-center justify-between">
+        <motion.div
+          initial={{ x: -50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          className="flex h-full items-center justify-between"
+        >
           <Link
             to="/"
             className="w-[55px] mr-2 h-full bg-slate-200 rounded-full flex items-center justify-center cursor-pointer"
@@ -65,11 +69,18 @@ const Navbar = () => {
               className="w-1/2 h-full bg-white rounded-full"
             ></motion.div>
           </div>
-        </div>
+        </motion.div>
         <h1 className="font-bold text-2xl dark:text-white">
           Chat <span className="text-blue-600">Away.</span>
         </h1>
-        <div className="flex items-center">
+        <motion.div
+          initial={{ x: 50, opacity: 0 }}
+          animate={{
+            x: 0,
+            opacity: 1,
+          }}
+          className="flex items-center"
+        >
           {userInfo ? (
             <button
               className="bg-slate-200 dark:bg-slate-900 dark:text-white p-3 rounded-lg duration-300 hover:bg-blue-600 dark-button hover:text-white"
@@ -93,7 +104,7 @@ const Navbar = () => {
               </Link>
             </>
           )}
-        </div>
+        </motion.div>
       </div>
     </div>
   )

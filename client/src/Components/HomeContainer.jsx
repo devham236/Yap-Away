@@ -4,6 +4,8 @@ import useCustomContext from "./../Context/CustomContext"
 import Message from "./Message"
 import ScrollToBottom from "react-scroll-to-bottom"
 import axios from "../axiosConfig"
+import { AnimatePresence, motion } from "framer-motion"
+import { sidebarContainer, sidebarItem } from "../Variants/animationVariants"
 
 const socket = io.connect("http://localhost:3000")
 
@@ -20,10 +22,11 @@ const HomeContainer = () => {
 
   useEffect(() => {
     socket.on("receiveMessage", (data) => {
-      console.log(data)
       setMessagesArray((prev) => [...prev, data])
     })
   }, [socket])
+
+  console.log(messagesArray)
 
   useEffect(() => {
     const getUsers = async () => {
@@ -89,6 +92,7 @@ const HomeContainer = () => {
   const deleteChat = async (chat, event) => {
     event.stopPropagation()
     try {
+      if (chat._id === selectedChat?._id) setSelectedChat(null)
       const result = await axios.delete(`/chat/${chat._id}`)
       setChats(result.data.chats.length === 0 ? null : result.data.chats)
     } catch (error) {
@@ -101,6 +105,7 @@ const HomeContainer = () => {
       const messageData = {
         room: selectedChat.roomName,
         author: userInfo.username,
+        bgColor: userInfo.bgColor,
         content: message,
         timestamp:
           new Date(Date.now()).getHours() +
@@ -140,15 +145,26 @@ const HomeContainer = () => {
             Search
           </button>
         </div>
-        <div className="w-full flex flex-col">
-          <div className="w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center">
+
+        <motion.div
+          variants={sidebarContainer}
+          exit={{ y: 20, opacity: 0 }}
+          initial="hidden"
+          animate="visible"
+          className="w-full flex flex-col"
+        >
+          <motion.div
+            variants={sidebarItem}
+            className="w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center"
+          >
             <h1 className="font-bold text-lg dark:text-white">
               Search <span className="text-blue-600">Results:</span>
             </h1>
-          </div>
+          </motion.div>
           {searchResult &&
             searchResult.map((user) => (
-              <div
+              <motion.div
+                variants={sidebarItem}
                 key={user._id}
                 className={`w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 flex items-center`}
               >
@@ -174,82 +190,96 @@ const HomeContainer = () => {
                     <i className="fa-solid fa-plus text-md"></i>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           {error && (
-            <div className="w-full h-[80px] duration-300 p-3 border-b-2 cursor-pointer border-slate-200 flex items-center">
+            <motion.div
+              variants={sidebarItem}
+              className="w-full h-[80px] duration-300 p-3 border-b-2 cursor-pointer border-slate-200 flex items-center"
+            >
               <p className="italic text-slate-500">{error}...</p>
-            </div>
+            </motion.div>
           )}
-          <div className="w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center">
+          <motion.div
+            variants={sidebarItem}
+            className="w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center"
+          >
             <h1 className="font-bold text-lg dark:text-white">
               Your <span className="text-blue-600">Chats:</span>
             </h1>
-          </div>
-          {chats &&
-            chats.map((chat) => (
-              <div
-                onClick={() => joinRoom(chat)}
-                key={chat._id}
-                className={`w-full h-[80px] hover:bg-slate-100 dark:hover:bg-slate-900 duration-300 p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center`}
-              >
-                <div className="w-[70px] h-full relative">
-                  {chat.participants.map((p, i) => (
-                    <div
-                      style={{ backgroundColor: p.bgColor }}
-                      key={i}
-                      className={`w-[70%] h-[70%] rounded-full flex items-center justify-center absolute ${
-                        p._id === userInfo._id
-                          ? "top-0 left-0"
-                          : "bottom-0 right-0 z-30"
-                      }`}
-                    >
-                      <p
-                        className="font-bold text-2xl text-white"
-                        style={{ textShadow: "0px 0px 8px #000" }}
+          </motion.div>
+          <AnimatePresence>
+            {chats &&
+              chats.map((chat) => (
+                <motion.div
+                  variants={sidebarItem}
+                  exit={{ opacity: 0 }}
+                  onClick={() => joinRoom(chat)}
+                  key={chat._id}
+                  className={`w-full h-[80px] hover:bg-slate-100 dark:hover:bg-slate-900 duration-300 p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center`}
+                >
+                  <div className="w-[70px] h-full relative">
+                    {chat.participants.map((p, i) => (
+                      <div
+                        style={{ backgroundColor: p.bgColor }}
+                        key={i}
+                        className={`w-[70%] h-[70%] rounded-full flex items-center justify-center absolute ${
+                          p._id === userInfo._id
+                            ? "top-0 left-0"
+                            : "bottom-0 right-0 z-30"
+                        }`}
                       >
-                        {p.username.charAt(0)}
+                        <p
+                          className="font-bold text-2xl text-white"
+                          style={{ textShadow: "0px 0px 8px #000" }}
+                        >
+                          {p.username.charAt(0)}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="ml-2 flex w-full items-center justify-between">
+                    <div className="">
+                      <div className="flex">
+                        {chat.participants
+                          .filter(
+                            (participant) => participant._id !== userInfo._id
+                          )
+                          .map((p, i) => (
+                            <h2
+                              key={i}
+                              className="font-bold mr-2 last:mr-0 dark:text-white"
+                            >
+                              {p.username}
+                            </h2>
+                          ))}
+                      </div>
+                      <p className="text-sm opacity-50 dark:text-white">
+                        Room: {chat.roomName}
                       </p>
                     </div>
-                  ))}
-                </div>
-                <div className="ml-2 flex w-full items-center justify-between">
-                  <div className="">
-                    <div className="flex">
-                      {chat.participants
-                        .filter(
-                          (participant) => participant._id !== userInfo._id
-                        )
-                        .map((p, i) => (
-                          <h2
-                            key={i}
-                            className="font-bold mr-2 last:mr-0 dark:text-white"
-                          >
-                            {p.username}
-                          </h2>
-                        ))}
+                    <div
+                      onClick={(event) => deleteChat(chat, event)}
+                      className="opacity-50 hover:text-white hover:bg-blue-600 hover:opacity-100 cursor-pointer duration-300 bg-slate-200 px-2 flex items-center justify-center py-2 rounded-full"
+                    >
+                      <i className="fa-solid fa-trash-can text-md"></i>
                     </div>
-                    <p className="text-sm opacity-50 dark:text-white">
-                      Room: {chat.roomName}
-                    </p>
                   </div>
-                  <div
-                    onClick={(event) => deleteChat(chat, event)}
-                    className="opacity-50 hover:text-white hover:bg-blue-600 hover:opacity-100 cursor-pointer duration-300 bg-slate-200 px-2 flex items-center justify-center py-2 rounded-full"
-                  >
-                    <i className="fa-solid fa-trash-can text-md"></i>
-                  </div>
-                </div>
-              </div>
-            ))}
-          <div className="w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center">
+                </motion.div>
+              ))}
+          </AnimatePresence>
+          <motion.div
+            variants={sidebarItem}
+            className="w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center"
+          >
             <h1 className="font-bold text-lg dark:text-white">
               Other <span className="text-blue-600">Users:</span>
             </h1>
-          </div>
+          </motion.div>
           {otherUsers &&
             otherUsers.map((user) => (
-              <div
+              <motion.div
+                variants={sidebarItem}
                 key={user._id}
                 className={`w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center`}
               >
@@ -286,13 +316,21 @@ const HomeContainer = () => {
                     </div>
                   )}
                 </div>
-              </div>
+              </motion.div>
             ))}
-        </div>
+        </motion.div>
       </div>
       {/*Chat */}
       {selectedChat ? (
-        <div className="w-[70%] h-full">
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{
+            scale: 1,
+            opacity: 1,
+            transition: { duration: 0.3, type: "spring" },
+          }}
+          className="w-[70%] h-full"
+        >
           <div className="w-full h-[calc(100%-80px)]">
             <div className="w-full h-16 border-b-[1px] border-slate-200 dark-border p-3 flex items-center">
               <h2 className="font-semibold dark:text-white">
@@ -326,7 +364,7 @@ const HomeContainer = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       ) : (
         <div className="w-[70%] h-full flex items-center justify-center">
           <div className="dark:bg-slate-900 w-[500px] h-[300px] bg-slate-200 rounded-lg flex items-center justify-center">

@@ -2,6 +2,8 @@ import axios from "axios"
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import useCustomContext from "../Context/CustomContext"
+import { motion } from "framer-motion"
+import { formContainer, formItem } from "../Variants/animationVariants"
 
 const Login = () => {
   const { setUserInfo } = useCustomContext()
@@ -33,33 +35,47 @@ const Login = () => {
 
   return (
     <div className="w-full duration-300 h-full flex items-center">
-      <form className="w-96 mx-auto p-14 bg-slate-300 dark:bg-slate-900 dark:border-0 rounded-xl">
-        <div className="flex flex-col items-center justify mb-6">
+      <motion.form
+        variants={formContainer}
+        initial="hidden"
+        animate="visible"
+        className="w-96 mx-auto p-14 bg-slate-300 dark:bg-slate-900 dark:border-0 rounded-xl"
+      >
+        <motion.div
+          variants={formItem}
+          className="flex flex-col items-center justify mb-6"
+        >
           <h1 className="font-bold dark:text-white text-2xl text-center">
             Login
           </h1>
-        </div>
-        <input
+        </motion.div>
+        <motion.input
+          variants={formItem}
           type="email"
           name="email"
           placeholder="E-Mail"
           className="block w-full mb-6 p-3 rounded-md bg-slate-100 dark:bg-slate-400 dark:placeholder:text-black dark:placeholder:text-opacity-50  outline:border-blue-600 outline-blue-600 dark:outline-none"
           onChange={handleChange}
         />
-        <input
+        <motion.input
+          variants={formItem}
           type="password"
           name="password"
           placeholder="Password"
           className="block w-full mb-6 p-3 rounded-md bg-slate-100 dark:bg-slate-400 dark:placeholder:text-black dark:placeholder:text-opacity-50  outline:border-blue-600 outline-blue-600 dark:outline-none"
           onChange={handleChange}
         />
-        <button
+        <motion.button
+          variants={formItem}
           className="w-full bg-blue-600 text-white p-3 rounded-md hover:shadow-xl duration-300 mb-6"
           onClick={login}
         >
           Login
-        </button>
-        <p className="text-sm text-center dark:text-white">
+        </motion.button>
+        <motion.p
+          variants={formItem}
+          className="text-sm text-center dark:text-white"
+        >
           New to ChatAway?
           <Link
             to="/signup"
@@ -67,11 +83,11 @@ const Login = () => {
           >
             Sign up here.
           </Link>
-        </p>
+        </motion.p>
         {error && (
           <p className="text-red-400 text-center mt-3 text-sm">{error}</p>
         )}
-      </form>
+      </motion.form>
     </div>
   )
 }
