@@ -27,12 +27,12 @@ const Message = ({ message }) => {
         </p>
       </div>
       <div
-        className={`p-2 bg-slate-200 flex flex-col ${
+        className={`p-2 dark:bg-slate-900 bg-slate-200 flex flex-col ${
           message.author === userInfo.username ? "items-end" : "items-start"
         } rounded-md max-w-[75%]`}
       >
-        <p>{message.content}</p>
-        <span className="opacity-50 italic text-xs mt-2">
+        <p className="dark:text-white">{message.content}</p>
+        <span className="opacity-50 dark:text-white italic text-xs mt-2">
           {message.timestamp}
         </span>
       </div>

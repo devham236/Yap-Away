@@ -337,7 +337,7 @@ const HomeContainer = () => {
                 Room: {selectedChat.roomName}
               </h2>
             </div>
-            <ScrollToBottom className="w-full max-h-[calc(100%-64px)] overflow-auto p-3 flex flex-col">
+            <ScrollToBottom className="w-full h-[calc(100%-64px)]  p-3 flex flex-col">
               {messagesArray?.map((message, i) => (
                 <Message message={message} key={i} />
               ))}
