@@ -3,7 +3,7 @@ import io from "socket.io-client"
 import useCustomContext from "./../Context/CustomContext"
 import Message from "./Message"
 import ScrollToBottom from "react-scroll-to-bottom"
-import axios from "../axiosConfig"
+import axios from "../Config/axiosConfig"
 import { AnimatePresence, motion } from "framer-motion"
 import { sidebarContainer, sidebarItem } from "../Variants/animationVariants"
 
