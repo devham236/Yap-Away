@@ -6,7 +6,7 @@ const { Server } = require("socket.io");
 const mongoose = require("mongoose");
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: "https://chat-app-frontend-indol.vercel.app/" }));
 app.use(express.json());
 
 const server = http.createServer(app);

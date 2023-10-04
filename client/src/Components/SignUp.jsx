@@ -7,18 +7,18 @@ import { motion } from "framer-motion"
 import { formContainer, formItem } from "../Variants/animationVariants"
 
 const SignUp = () => {
-  const { userInfo, setUserInfo } = useCustomContext()
+  const { userInfo, setUserInfo, checkErrorMsg } = useCustomContext()
   const [signupInfo, setSignUpInfo] = useState({
     username: "",
     email: "",
     password: "",
   })
-  const [error, setError] = useState("")
+  const [error, setError] = useState(null)
   const navigate = useNavigate()
 
   const handleChange = async (event) => {
     const { name, value } = event.target
-    setError("")
+    setError(null)
     setSignUpInfo((prevInfo) => ({
       ...prevInfo,
       [name]: value,
@@ -62,7 +62,11 @@ const SignUp = () => {
           type="text"
           name="username"
           placeholder="Username"
-          className="block w-full mb-6 p-3 rounded-md bg-slate-100 dark:bg-slate-400 dark:placeholder:text-black dark:placeholder:text-opacity-50  outline:border-blue-600 outline-blue-600 dark:outline-none"
+          className={`block w-full mb-6 p-3 rounded-md bg-slate-100 dark:bg-slate-400 dark:placeholder:text-black dark:placeholder:text-opacity-50 outline:border-blue-600 outline-blue-600 dark:outline-none ${
+            checkErrorMsg(error, "Username") || checkErrorMsg(error, "All")
+              ? "border-2 border-red-500"
+              : ""
+          }`}
           onChange={handleChange}
         />
         <motion.input
@@ -70,7 +74,11 @@ const SignUp = () => {
           type="email"
           name="email"
           placeholder="E-Mail"
-          className="block w-full mb-6 p-3 rounded-md bg-slate-100 dark:bg-slate-400 dark:placeholder:text-black dark:placeholder:text-opacity-50  outline:border-blue-600 outline-blue-600 dark:outline-none"
+          className={`block w-full mb-6 p-3 rounded-md bg-slate-100 dark:bg-slate-400 dark:placeholder:text-black dark:placeholder:text-opacity-50  outline:border-blue-600 outline-blue-600 dark:outline-none ${
+            checkErrorMsg(error, "Email") || checkErrorMsg(error, "All")
+              ? "border-2 border-red-500"
+              : ""
+          }`}
           onChange={handleChange}
         />
         <motion.input
@@ -78,7 +86,11 @@ const SignUp = () => {
           type="password"
           name="password"
           placeholder="Password"
-          className="block w-full mb-6 p-3 rounded-md bg-slate-100 dark:bg-slate-400 dark:placeholder:text-black dark:placeholder:text-opacity-50  outline:border-blue-600 outline-blue-600 dark:outline-none"
+          className={`block w-full mb-6 p-3 rounded-md bg-slate-100 dark:bg-slate-400 dark:placeholder:text-black dark:placeholder:text-opacity-50  outline:border-blue-600 outline-blue-600 dark:outline-none ${
+            checkErrorMsg(error, "Password") || checkErrorMsg(error, "All")
+              ? "border-2 border-red-500"
+              : ""
+          }`}
           onChange={handleChange}
         />
         <motion.button
@@ -102,7 +114,13 @@ const SignUp = () => {
           </Link>
         </motion.p>
         {error && (
-          <p className="text-red-400 text-center mt-3 text-sm">{error}</p>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-red-400 text-center mt-3 text-sm"
+          >
+            {error}
+          </motion.p>
         )}
       </motion.form>
     </div>

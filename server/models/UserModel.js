@@ -38,7 +38,7 @@ userSchema.statics.signup = async function (
 
   const usernameExists = await this.findOne({ username });
 
-  const emailExists = await this.findOne({ username });
+  const emailExists = await this.findOne({ email });
 
   if (usernameExists) {
     throw Error("Username already in use.");

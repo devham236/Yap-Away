@@ -25,11 +25,17 @@ const ContextProvider = ({ children }) => {
     verifyUser()
   }, [])
 
+  const checkErrorMsg = (errorMessage, inputName) => {
+    const includesInputName = errorMessage?.includes(inputName)
+    return includesInputName
+  }
+
   return (
     <Context.Provider
       value={{
         userInfo,
         setUserInfo,
+        checkErrorMsg,
         darkMode,
         setDarkMode,
       }}
