@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react"
-import { describe, expect, test } from "vitest"
-import Navbar from "./../Components/Navbar"
-import { ContextProvider } from "../Context/Context"
+import { beforeEach, describe, expect, test } from "vitest"
+import { ContextProvider } from "../../Context/Context"
 import { BrowserRouter } from "react-router-dom"
+import Navbar from "./../../Components/Navbar"
 
 describe("Navbar", () => {
-  test("Renders text", () => {
+  beforeEach(() => {
     render(
       <ContextProvider>
         <BrowserRouter>
@@ -13,7 +13,9 @@ describe("Navbar", () => {
         </BrowserRouter>
       </ContextProvider>
     )
-    const textEl = screen.getByText("Chat")
+  })
+  test("Renders text", () => {
+    const textEl = screen.getByText(/^chat$/i)
     expect(textEl).toBeInTheDocument()
   })
 })
