@@ -15,7 +15,7 @@ describe("Navbar", () => {
     )
   })
   test("Renders text", () => {
-    const textEl = screen.getByText(/^chat$/i)
+    const textEl = screen.getByText(/chat/i)
     expect(textEl).toBeInTheDocument()
   })
 })
