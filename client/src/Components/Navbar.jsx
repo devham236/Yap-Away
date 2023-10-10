@@ -37,16 +37,10 @@ const Navbar = () => {
           >
             {userInfo ? (
               <div
-                style={{ backgroundColor: userInfo?.bgColor }}
+                // style={{ backgroundColor: userInfo?.bgColor }}
+                style={{}}
                 className={`w-full h-full rounded-full flex items-center justify-center`}
-              >
-                <p
-                  style={{ textShadow: "0px 0px 8px #000" }}
-                  className="font-semibold text-white text-2xl"
-                >
-                  {userInfo.username.charAt(0)}
-                </p>
-              </div>
+              ></div>
             ) : (
               <img
                 src={

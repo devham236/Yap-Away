@@ -18,17 +18,19 @@ const getUserList = async (req, res) => {
   res.status(200).json({ usersList: list });
 };
 
-const signUp = async (req, res) => {
-  const { username, email, password, bgColor } = req.body;
+const signup = async (req, res) => {
+  const { username, email, password } = req.body;
+  const imageName = req.file.filename;
   try {
-    const newUser = await UserModel.signup(username, email, password, bgColor);
+    const newUser = await UserModel.signup(username, email, password);
+    const userImage = await ImageModel.storeImage(imageName, newUser._id);
     const token = genToken(newUser._id);
     res.status(200).json({
       username: newUser.username,
       email: newUser.email,
       _id: newUser._id,
       token,
-      bgColor: newUser.bgColor,
+      userImage,
     });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -39,13 +41,16 @@ const login = async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await UserModel.login(email, password);
+    const userImage = await ImageModel.findOne({
+      user: user._id,
+    });
     const token = genToken(user._id);
     res.status(200).json({
       username: user.username,
       email: user.email,
       _id: user._id,
       token,
-      bgColor: user.bgColor,
+      image: userImage.image,
     });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -58,11 +63,14 @@ const verifyUser = async (req, res) => {
     jwt.verify(token, process.env.JWT_KEY, async (err, data) => {
       if (err) throw err;
       const matchingUser = await UserModel.findOne({ _id: data.id });
+      const matchingImage = await ImageModel.findOne({
+        user: matchingUser._id,
+      });
       res.status(200).json({
         username: matchingUser.username,
         email: matchingUser.email,
         _id: matchingUser._id,
-        bgColor: matchingUser.bgColor,
+        image: matchingImage.image,
       });
     });
   } else {
@@ -70,4 +78,4 @@ const verifyUser = async (req, res) => {
   }
 };
 
-module.exports = { getUser, getUserList, signUp, login, verifyUser };
+module.exports = { getUser, getUserList, login, signup, verifyUser };

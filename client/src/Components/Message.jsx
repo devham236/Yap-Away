@@ -1,5 +1,4 @@
 import React from "react"
-import me from "../Images/me.png"
 import useCustomContext from "../Context/CustomContext"
 import { motion } from "framer-motion"
 

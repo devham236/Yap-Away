@@ -26,8 +26,6 @@ const HomeContainer = () => {
     })
   }, [socket])
 
-  console.log(messagesArray)
-
   useEffect(() => {
     const getUsers = async () => {
       try {

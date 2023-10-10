@@ -10,12 +10,12 @@ const imageSchema = new mongoose.Schema({
   },
 });
 
-imageSchema.statics.storeImage = async function (image, id) {
-  const newImage = await this.create({ image, user: id });
+imageSchema.statics.storeImage = async function (image, user) {
+  const newImage = await this.create({ image, user });
 
   return newImage;
 };
 
-const ImageModel = mongoose.model("Image", imageSchema);
+const ImageModel = mongoose.model("UserImage", imageSchema);
 
 module.exports = ImageModel;
