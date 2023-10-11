@@ -18,6 +18,7 @@ const App = () => {
 
   return (
     <div
+      data-testid="main-container"
       className={`w-[1300px] h-[800px] bg-white rounded-2xl shadow-lg relative ${
         darkMode && "dark"
       }`}

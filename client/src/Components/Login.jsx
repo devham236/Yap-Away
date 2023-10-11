@@ -75,6 +75,7 @@ const Login = () => {
         />
         <motion.button
           variants={formItem}
+          data-testid="loginBtn"
           className="w-full bg-blue-600 text-white p-3 rounded-md hover:shadow-xl duration-300 mb-6"
           onClick={login}
         >

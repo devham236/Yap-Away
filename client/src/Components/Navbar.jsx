@@ -33,6 +33,7 @@ const Navbar = () => {
         >
           <Link
             to="/"
+            data-testid="home-link"
             className="w-[55px] mr-2 h-full bg-slate-200 rounded-full flex items-center justify-center cursor-pointer"
           >
             {userInfo ? (
@@ -40,7 +41,9 @@ const Navbar = () => {
                 // style={{ backgroundColor: userInfo?.bgColor }}
                 style={{}}
                 className={`w-full h-full rounded-full flex items-center justify-center`}
-              ></div>
+              >
+                <img src={`../images/${userInfo.image}`} alt="" />
+              </div>
             ) : (
               <img
                 src={
@@ -51,8 +54,14 @@ const Navbar = () => {
               />
             )}
           </Link>
+          {userInfo && (
+            <div className="mx-2">
+              <p className="font-bold">{userInfo.username}</p>
+            </div>
+          )}
           <div
             onClick={() => setDarkMode(!darkMode)}
+            data-testid="toggle"
             className={`w-[70px] h-[40px] flex items-center ${
               darkMode ? "justify-start" : "justify-end"
             } p-[5px] ml-2 rounded-full bg-slate-300 dark:bg-slate-900 cursor-pointer`}

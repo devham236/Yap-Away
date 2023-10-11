@@ -30,7 +30,7 @@ const HomeContainer = () => {
     const getUsers = async () => {
       try {
         const result = await axios.get("/user/list")
-        const filteredList = result.data.usersList.filter(
+        const filteredList = result?.data.usersList.filter(
           (user) => user._id !== userInfo?._id
         )
         setOtherUsers(filteredList)
@@ -46,7 +46,7 @@ const HomeContainer = () => {
       const result = await axios.get(
         `/chat/chats?username=${userInfo?.username}`
       )
-      setChats(result.data.chats)
+      setChats(result?.data.chats)
     }
     getChats()
   }, [])
