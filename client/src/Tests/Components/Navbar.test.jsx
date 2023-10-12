@@ -1,8 +1,9 @@
-import { fireEvent, screen } from "@testing-library/react"
+import { fireEvent, screen, act, renderHook } from "@testing-library/react"
 import { beforeEach, describe, expect, test, vi } from "vitest"
 import Navbar from "./../../Components/Navbar"
 import App from "../../App"
 import renderWithWrappers from "../Utils/renderWithWrappers"
+import useCustomContext from "../../Context/CustomContext"
 
 describe("Navbar", () => {
   describe("Links should navigate to correct forms", () => {

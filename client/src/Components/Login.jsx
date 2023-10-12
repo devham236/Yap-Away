@@ -6,13 +6,13 @@ import { motion } from "framer-motion"
 import { formContainer, formItem } from "../Variants/animationVariants"
 
 const Login = () => {
-  const { setUserInfo, checkErrorMsg } = useCustomContext()
+  const { checkErrorMsg, setUserInfo } = useCustomContext()
+  const navigate = useNavigate()
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
   })
   const [error, setError] = useState("")
-  const navigate = useNavigate()
 
   const handleChange = (event) => {
     const { name, value } = event.target

@@ -104,6 +104,7 @@ const SignUp = () => {
         />
         <motion.button
           variants={formItem}
+          data-testid="signupBtn"
           className="w-full bg-blue-600 mb-6 text-white p-3 rounded-md hover:shadow-xl duration-300"
           type="submit"
           onClick={signup}

@@ -1,9 +1,12 @@
 import { beforeEach, describe, expect, vi } from "vitest"
+import { fireEvent, screen, renderHook, act } from "@testing-library/react"
+import { ContextProvider } from "../../Context/Context"
 import renderWithWrappers from "../Utils/renderWithWrappers"
 import Login from "../../Components/Login"
-import { fireEvent, screen } from "@testing-library/react"
 import axios from "axios"
 import App from "../../App"
+import useCustomContext from "../../Context/CustomContext"
+import mockResponseData from "../Utils/mockResponseData"
 
 vi.mock("axios")
 
@@ -24,21 +27,28 @@ describe("Login Form", () => {
     })
   })
 
-  test("User gets logged in when button gets clicked", async () => {
-    renderWithWrappers(<App />)
-    const mockResponseData = {
-      username: "mockUsername",
-      email: "mockEmail",
-      _id: "mockId",
-      token: "mockToken",
-      image: "mockImage",
-    }
+  describe("Login Functionality", () => {
+    test("User gets logged in when button gets clicked", async () => {
+      renderWithWrappers(<Login />)
 
-    axios.post.mockResolvedValue({ data: mockResponseData })
+      axios.post.mockResolvedValue({ data: mockResponseData })
 
-    const loginBtn = screen.getByTestId("loginBtn")
-    fireEvent.click(loginBtn)
-    const username = await screen.findByText("mockUsername")
-    expect(username).toBeInTheDocument()
+      const loginBtn = screen.getByTestId("loginBtn")
+      fireEvent.click(loginBtn)
+      const username = await screen.findByText(mockResponseData.username)
+      expect(username).toBeInTheDocument()
+    })
+
+    test("userInfo state contains an object with user info when user logs in", () => {
+      const { result } = renderHook(() => useCustomContext(), {
+        wrapper: ContextProvider,
+      })
+
+      act(() => {
+        result.current.setUserInfo(mockResponseData)
+      })
+
+      expect(result.current.userInfo).not.toBe(null)
+    })
   })
 })

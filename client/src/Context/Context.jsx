@@ -25,6 +25,10 @@ const ContextProvider = ({ children }) => {
     verifyUser()
   }, [])
 
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode)
+  }
+
   const checkErrorMsg = (errorMessage, inputName) => {
     const includesInputName = errorMessage?.includes(inputName)
     return includesInputName
@@ -38,6 +42,7 @@ const ContextProvider = ({ children }) => {
         checkErrorMsg,
         darkMode,
         setDarkMode,
+        toggleDarkMode,
       }}
     >
       {children}

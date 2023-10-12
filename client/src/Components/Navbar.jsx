@@ -4,7 +4,7 @@ import useCustomContext from "../Context/CustomContext"
 import { motion } from "framer-motion"
 
 const Navbar = () => {
-  const { userInfo, setUserInfo, darkMode, setDarkMode } = useCustomContext()
+  const { userInfo, setUserInfo, darkMode, toggleDarkMode } = useCustomContext()
   const navigate = useNavigate()
 
   const logout = () => {
@@ -60,7 +60,7 @@ const Navbar = () => {
             </div>
           )}
           <div
-            onClick={() => setDarkMode(!darkMode)}
+            onClick={toggleDarkMode}
             data-testid="toggle"
             className={`w-[70px] h-[40px] flex items-center ${
               darkMode ? "justify-start" : "justify-end"
