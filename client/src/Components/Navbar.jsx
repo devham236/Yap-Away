@@ -24,7 +24,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className="w-full h-20 p-3 rounded-tr-2xl rounded-tl-2xl border-b-2 border-slate-200 dark-border">
+    <div className="w-full h-20 p-3  rounded-tr-2xl rounded-tl-2xl border-b-2 border-slate-200 dark-border">
       <div className="w-full h-full flex items-center justify-between">
         <motion.div
           initial={{ x: -50, opacity: 0 }}
@@ -42,14 +42,14 @@ const Navbar = () => {
                 style={{}}
                 className={`w-full h-full rounded-full flex items-center justify-center`}
               >
-                <img src={`../images/${userInfo.image}`} alt="" />
+                <img src={`../images/${userInfo.image}`} alt="user avatar" />
               </div>
             ) : (
               <img
                 src={
                   "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
                 }
-                alt=""
+                alt="anonymous avatar icon"
                 className="w-full h-full object-cover rounded-full"
               />
             )}

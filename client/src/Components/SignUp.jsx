@@ -1,20 +1,15 @@
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import axios from "../Config/axiosConfig"
-import useCustomContext from "./../Context/CustomContext"
-import genHexCode from "./../Utils/genHexCode"
 import { motion } from "framer-motion"
 import { formContainer, formItem } from "../Variants/animationVariants"
+import axios from "../Config/axiosConfig"
+import useCustomContext from "./../Context/CustomContext"
+import useSignupInfo from "../Hooks/useSignupInfo"
+import genHexCode from "./../Utils/genHexCode"
 
 const SignUp = () => {
   const { userInfo, setUserInfo, checkErrorMsg } = useCustomContext()
-  const [signupInfo, setSignUpInfo] = useState({
-    username: "",
-    email: "",
-    password: "",
-    image: "",
-  })
-  const [error, setError] = useState(null)
+  const { signupInfo, setSignUpInfo, error, setError } = useSignupInfo()
   const navigate = useNavigate()
 
   const handleChange = async (event) => {

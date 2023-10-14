@@ -6,30 +6,41 @@ import Login from "../../Components/Login"
 import axios from "axios"
 import App from "../../App"
 import useCustomContext from "../../Context/CustomContext"
+import useLoginInfo from "../../Hooks/useLoginInfo"
 import mockResponseData from "../Utils/mockResponseData"
 
 vi.mock("axios")
 
 describe("Login Form", () => {
-  describe("Input value should change when typed in", () => {
+  describe("loginInfo state updates correctly when changed", () => {
     beforeEach(() => {
       renderWithWrappers(<Login />)
     })
-    test("Email input", () => {
-      const emailInput = screen.getByPlaceholderText("E-Mail")
-      fireEvent.change(emailInput, { target: { value: "test@email.com" } })
-      expect(emailInput.value).toBe("test@email.com")
+    test("Email loginInfo", async () => {
+      const { result } = renderHook(() => useLoginInfo())
+      act(() => {
+        result.current.setLoginInfo({
+          ...result.current.loginInfo,
+          email: "test@email.com",
+        })
+      })
+      expect(result.current.loginInfo.email).toBe("test@email.com")
     })
-    test("Password input", () => {
-      const passwordInput = screen.getByPlaceholderText("Password")
-      fireEvent.change(passwordInput, { target: { value: "123" } })
-      expect(passwordInput.value).toBe("123")
+    test("Password loginInfo", () => {
+      const { result } = renderHook(useLoginInfo)
+      act(() => {
+        result.current.setLoginInfo({
+          ...result.current.loginInfo,
+          password: "123",
+        })
+      })
+      expect(result.current.loginInfo.password).toBe("123")
     })
   })
 
   describe("Login Functionality", () => {
     test("User gets logged in when button gets clicked", async () => {
-      renderWithWrappers(<Login />)
+      renderWithWrappers(<App />)
 
       axios.post.mockResolvedValue({ data: mockResponseData })
 

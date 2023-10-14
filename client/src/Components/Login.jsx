@@ -4,15 +4,12 @@ import { Link, useNavigate } from "react-router-dom"
 import useCustomContext from "../Context/CustomContext"
 import { motion } from "framer-motion"
 import { formContainer, formItem } from "../Variants/animationVariants"
+import useLoginInfo from "../Hooks/useLoginInfo"
 
 const Login = () => {
   const { checkErrorMsg, setUserInfo } = useCustomContext()
+  const { error, setError, loginInfo, setLoginInfo } = useLoginInfo()
   const navigate = useNavigate()
-  const [loginInfo, setLoginInfo] = useState({
-    email: "",
-    password: "",
-  })
-  const [error, setError] = useState("")
 
   const handleChange = (event) => {
     const { name, value } = event.target
