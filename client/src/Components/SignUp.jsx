@@ -13,11 +13,11 @@ const SignUp = () => {
   const navigate = useNavigate()
 
   const handleChange = async (event) => {
-    const { name, value, files } = event.target
+    const { name, value } = event.target
     setError(null)
     setSignUpInfo((prevInfo) => ({
       ...prevInfo,
-      [name]: files ? files[0] : value,
+      [name]: value,
     }))
   }
 
@@ -25,8 +25,9 @@ const SignUp = () => {
     event.preventDefault()
     console.log(signupInfo)
     try {
-      const result = await axios.post("/user/signup", signupInfo, {
-        headers: { "Content-Type": "multipart/form-data" },
+      const result = await axios.post("/user/signup", {
+        ...signupInfo,
+        bgColor: genHexCode(),
       })
       console.log(result)
       sessionStorage.setItem("token", JSON.stringify(result.data.token))
@@ -88,13 +89,6 @@ const SignUp = () => {
               ? "border-2 border-red-500"
               : ""
           }`}
-          onChange={handleChange}
-        />
-        <motion.input
-          variants={formItem}
-          type="file"
-          name="image"
-          className={`block w-full mb-6 p-3 rounded-md bg-slate-100 dark:bg-slate-400 dark:placeholder:text-black dark:placeholder:text-opacity-50  outline:border-blue-600 outline-blue-600 dark:outline-none`}
           onChange={handleChange}
         />
         <motion.button
