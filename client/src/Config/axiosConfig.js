@@ -6,6 +6,7 @@ const token = JSON.parse(sessionStorage.getItem("token"))
 
 if (token) {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
+  axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*"
 }
 
 export default axios
