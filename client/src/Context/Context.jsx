@@ -19,8 +19,9 @@ const ContextProvider = ({ children }) => {
             token,
           },
           {
+            crossorigin: true,
             headers: {
-              "Access-Control-Allow-Origin": "true",
+              "Access-Control-Allow-Origin": "*",
             },
           }
         )
