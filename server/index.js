@@ -6,7 +6,7 @@ const { Server } = require("socket.io");
 const mongoose = require("mongoose");
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 const server = http.createServer(app);
@@ -21,6 +21,10 @@ const chatRouter = require("./routes/chatRoutes");
 const userRouter = require("./routes/userRoutes");
 app.use("/api/v1/chat", chatRouter);
 app.use("/api/v1/user", userRouter);
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
 
 io.on("connection", (socket) => {
   console.log(`User connected ${socket.id}`);
