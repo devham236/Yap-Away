@@ -13,18 +13,9 @@ const ContextProvider = ({ children }) => {
 
     const verifyUser = async () => {
       try {
-        const result = await axios.post(
-          "/user/verify",
-          {
-            token,
-          },
-          {
-            crossorigin: true,
-            headers: {
-              "Access-Control-Allow-Origin": "*",
-            },
-          }
-        )
+        const result = await axios.post("/user/verify", {
+          token,
+        })
         setUserInfo(result.data)
       } catch (error) {
         console.log(error)
