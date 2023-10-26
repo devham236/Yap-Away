@@ -23,7 +23,6 @@ const SignUp = () => {
 
   const signup = async (event) => {
     event.preventDefault()
-    console.log(signupInfo)
     try {
       const result = await axios.post("/user/signup", {
         ...signupInfo,

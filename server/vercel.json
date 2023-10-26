@@ -5,7 +5,10 @@
       "source": "/api/v1/(.*)",
       "headers": [
         { "key": "Access-Control-Allow-Credentials", "value": "true" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://chat-app-umber-five-18.vercel.app/"
+        },
         {
           "key": "Access-Control-Allow-Methods",
           "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT"
