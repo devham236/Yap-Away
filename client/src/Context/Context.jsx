@@ -5,7 +5,6 @@ const Context = createContext()
 
 const ContextProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null)
-  const [userImage, setUserImage] = useState(null)
   const [darkMode, setDarkMode] = useState(false)
 
   useEffect(() => {
