@@ -18,6 +18,15 @@
           "value": "*"
         }
       ]
+    },
+    {
+      "source": "/chat-app-umber-five-18.vercel.app/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "application/json, text/plain, *"
+        }
+      ]
     }
   ]
 }
