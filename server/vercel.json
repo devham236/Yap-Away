@@ -6,8 +6,7 @@
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "*",
-          "Content-Type": "application/json"
+          "value": "*"
         }
       ]
     },
@@ -16,8 +15,7 @@
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "*",
-          "Content-Type": "application/json"
+          "value": "*"
         }
       ]
     }
