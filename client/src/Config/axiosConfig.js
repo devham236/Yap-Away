@@ -1,8 +1,6 @@
 import axios from "axios"
 
 axios.defaults.baseURL = "https://chat-app-server-sigma.vercel.app/api/v1"
-axios.defaults.headers.common["Access-Control-Allow-Origin"] =
-  "https://chat-app-umber-five-18.vercel.app/"
 
 const token = JSON.parse(sessionStorage.getItem("token"))
 
