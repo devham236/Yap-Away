@@ -7,7 +7,7 @@
         { "key": "Access-Control-Allow-Credentials", "value": "true" },
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "/chat-app-umber-five-18.vercel.app/(.*)"
+          "value": "*"
         },
         {
           "key": "Access-Control-Allow-Methods",
