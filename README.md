@@ -3,11 +3,16 @@
 Welcome to Chat Away! A real-time messaging application using the popular MERN tech stack.
 
 
+## Demo/Preview
+
+
+https://github.com/devham236/chat-app/assets/90037750/038be362-f18a-4c52-b4ac-10a059675691
+
+
 
 ## Features
 * **Real-time Messaging:** Enjoy instant and seamless messaging with your contacts.
 * **User Authentication:** Securely log in and authenticate users.
-* **User Profiles:** Customize your profile with a profile picture and status.
 * **Message History:** Access your chat history for easy reference.
 * **Responsive Design:** Use the application on various devices - desktop, tablet, or mobile.
 
@@ -76,16 +81,6 @@ npm install
 ```bash
 npm run dev
 ```
-
-
-
-## Demo/Preview
-
-
-https://github.com/devham236/chat-app/assets/90037750/038be362-f18a-4c52-b4ac-10a059675691
-
-
-
 
 
 
