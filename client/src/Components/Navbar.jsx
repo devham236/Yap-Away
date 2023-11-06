@@ -24,7 +24,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className="w-full h-20 p-3  rounded-tr-2xl rounded-tl-2xl border-b-2 border-slate-200 dark-border">
+    <div className="w-full h-20 p-3 lg:rounded-tr-2xl lg:rounded-tl-2xl border-b-2 border-slate-200 dark-border">
       <div className="w-full h-full flex items-center justify-between">
         <motion.div
           initial={{ x: -50, opacity: 0 }}
@@ -34,7 +34,7 @@ const Navbar = () => {
           <Link
             to="/"
             data-testid="home-link"
-            className="w-[55px] mr-2 h-full bg-slate-200 rounded-full flex items-center justify-center cursor-pointer"
+            className="sm:hidden lg:block w-[55px] mr-2 h-full bg-slate-200 rounded-full flex items-center justify-center cursor-pointer"
           >
             {userInfo ? (
               <div
@@ -60,7 +60,7 @@ const Navbar = () => {
           </Link>
           {userInfo && (
             <div className="mx-2">
-              <p className="font-bold">{userInfo.username}</p>
+              <p className="font-bold dark:text-white">{userInfo.username}</p>
             </div>
           )}
           <div
@@ -98,13 +98,13 @@ const Navbar = () => {
           ) : (
             <>
               <Link
-                className="mr-2 dark:bg-slate-900 dark-button dark:text-white bg-slate-200 p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
+                className="sm:hidden lg:block mr-2 dark:bg-slate-900 dark-button dark:text-white bg-slate-200 p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
                 to="/signup"
               >
                 <p className="font-semibold">Sign Up</p>
               </Link>
               <Link
-                className="ml-2 dark:bg-slate-900 dark-button dark:text-white bg-slate-200 p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
+                className="sm:hidden lg:block ml-2 dark:bg-slate-900 dark-button dark:text-white bg-slate-200 p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
                 to="/login"
               >
                 <p className="font-semibold">Login</p>

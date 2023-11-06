@@ -19,11 +19,11 @@ const App = () => {
   return (
     <div
       data-testid="main-container"
-      className={`w-[1300px] h-[800px] bg-white rounded-2xl shadow-lg relative ${
+      className={`lg:w-[1300px] lg:h-[800px] sm:w-full sm:h-[100vh] bg-white lg:rounded-2xl sm:rounded-none shadow-lg  relative ${
         darkMode && "dark"
       }`}
     >
-      <div className="w-full h-full rounded-2xl duration-300 dark:bg-slate-700">
+      <div className="w-full h-full lg:rounded-2xl sm:rounded-none duration-300 dark:bg-slate-700">
         <Navbar />
         <Routes>
           <Route index path="/login" element={<Login />} />
