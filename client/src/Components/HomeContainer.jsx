@@ -120,7 +120,7 @@ const HomeContainer = () => {
   return (
     <div className="w-full h-[calc(100%-80px)] rounded-b-2xl flex">
       {/*Sidebar*/}
-      <div className="w-[30%] border-r-2 border-slate-200 dark-border max-h-full overflow-auto">
+      <div className="lg:w-[30%] sm:hidden border-r-2 border-slate-200 dark-border max-h-full overflow-auto">
         <div className="w-full h-16 border-b-[2px] border-slate-200 dark-border flex items-center justify-between p-3">
           <input
             type="text"
@@ -364,7 +364,7 @@ const HomeContainer = () => {
           </div>
         </motion.div>
       ) : (
-        <div className="w-[70%] h-full flex items-center justify-center">
+        <div className="lg:w-[70%] sm:w-full sm:px-3 lg:px-0 h-full flex items-center justify-center">
           <div className="dark:bg-slate-900 w-[500px] h-[300px] bg-slate-200 rounded-lg flex items-center justify-center">
             <h1 className="font-bold text-lg dark:text-white">
               Select a chat to start texting.

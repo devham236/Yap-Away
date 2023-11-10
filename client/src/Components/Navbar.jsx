@@ -1,10 +1,11 @@
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import useCustomContext from "../Context/CustomContext"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 
 const Navbar = () => {
   const { userInfo, setUserInfo, darkMode, toggleDarkMode } = useCustomContext()
+  const [opened, setOpened] = useState(false)
   const navigate = useNavigate()
 
   const logout = () => {
@@ -23,8 +24,10 @@ const Navbar = () => {
     damping: 30,
   }
 
+  console.log(opened)
+
   return (
-    <div className="w-full h-20 p-3 lg:rounded-tr-2xl lg:rounded-tl-2xl border-b-2 border-slate-200 dark-border">
+    <div className="w-full h-20 p-3 lg:rounded-tr-2xl lg:rounded-tl-2xl border-b-2 border-slate-200 dark-border relative">
       <div className="w-full h-full flex items-center justify-between">
         <motion.div
           initial={{ x: -50, opacity: 0 }}
@@ -59,14 +62,16 @@ const Navbar = () => {
             )}
           </Link>
           {userInfo && (
-            <div className="mx-2">
-              <p className="font-bold dark:text-white">{userInfo.username}</p>
+            <div className="lg:mx-2 sm:mx-0">
+              <p className="font-bold dark:text-white lg:block sm:hidden">
+                {userInfo.username}
+              </p>
             </div>
           )}
           <div
             onClick={toggleDarkMode}
             data-testid="toggle"
-            className={`w-[70px] h-[40px] flex items-center ${
+            className={`lg:w-[70px] sm:w-[60px] lg:h-[40px] sm:h-[35px] flex items-center ${
               darkMode ? "justify-start" : "justify-end"
             } p-[5px] ml-2 rounded-full bg-slate-300 dark:bg-slate-900 cursor-pointer`}
           >
@@ -86,7 +91,7 @@ const Navbar = () => {
             x: 0,
             opacity: 1,
           }}
-          className="flex items-center"
+          className="flex items-center sm:hidden lg:block"
         >
           {userInfo ? (
             <button
@@ -98,13 +103,13 @@ const Navbar = () => {
           ) : (
             <>
               <Link
-                className="sm:hidden lg:block mr-2 dark:bg-slate-900 dark-button dark:text-white bg-slate-200 p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
+                className="mr-2 dark:bg-slate-900 dark-button dark:text-white bg-slate-200 p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
                 to="/signup"
               >
                 <p className="font-semibold">Sign Up</p>
               </Link>
               <Link
-                className="sm:hidden lg:block ml-2 dark:bg-slate-900 dark-button dark:text-white bg-slate-200 p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
+                className="ml-2 dark:bg-slate-900 dark-button dark:text-white bg-slate-200 p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
                 to="/login"
               >
                 <p className="font-semibold">Login</p>
@@ -112,6 +117,84 @@ const Navbar = () => {
             </>
           )}
         </motion.div>
+        <motion.div
+          initial={{ x: 50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          onClick={() => setOpened(!opened)}
+          className="p-3 rounded-lg bg-slate-300 dark:bg-slate-900 lg:hidden sm:flex items-center justify-center"
+        >
+          <i
+            className={`fa-solid fa-${
+              opened ? "xmark" : "bars"
+            } dark:text-white`}
+          ></i>
+        </motion.div>
+        <AnimatePresence>
+          {opened && (
+            <motion.div
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 100, opacity: 0 }}
+              className="absolute z-50 top-20 left-0 w-full h-[calc(100vh-80px)] overflow-auto bg-white flex flex-col items-center p-4 justify-start dark:bg-slate-700"
+            >
+              {userInfo ? (
+                <div className="w-full max-h-full">
+                  <div className="flex items-center justify-center mb-4 p-2 border-2 border-slate-300 rounded-lg">
+                    <div className="w-[55px] h-[55px] mr-2 bg-slate-200 rounded-full flex items-center justify-center cursor-pointer">
+                      <div
+                        style={{ backgroundColor: userInfo?.bgColor }}
+                        className={`w-full h-full rounded-full flex items-center justify-center`}
+                      >
+                        <p
+                          style={{ textShadow: "0px 0px 10px #000" }}
+                          className="text-2xl text-white font-bold"
+                        >
+                          {userInfo?.username.charAt(0)}
+                        </p>
+                      </div>
+                    </div>
+                    <p className="text-2xl dark:text-white font-bold">
+                      {userInfo?.username}
+                    </p>
+                  </div>
+                  <button
+                    onClick={logout}
+                    className="lg:mr-2 sm:mb-4 sm:flex sm:items-center sm:justify-center sm:w-full dark:bg-slate-900 dark-button dark:text-white bg-slate-200 p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
+                  >
+                    <p className="font-semibold">Logout</p>
+                  </button>
+                  <div className="w-full h-16 border-b-[2px] border-slate-200 dark-border flex items-center justify-between p-3">
+                    <input
+                      type="text"
+                      placeholder="Search for Users..."
+                      className="bg-transparent outline-none"
+                    />
+                    <button className="px-4 py-2 rounded-lg bg-slate-200 font-bold hover:bg-blue-600 dark:bg-slate-900 dark:text-white hover:text-white duration-300 dark-button">
+                      Search
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <Link
+                    className="lg:mr-2 sm:mb-4 sm:flex sm:items-center sm:justify-center sm:w-full dark:bg-slate-900 dark-button dark:text-white bg-slate-200 p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
+                    to="/signup"
+                    onClick={() => setOpened(false)}
+                  >
+                    <p className="font-semibold">Sign Up</p>
+                  </Link>
+                  <Link
+                    className="lg:ml-2 sm:w-full sm:flex sm:items-center sm:justify-center dark:bg-slate-900 dark-button dark:text-white bg-slate-200 p-3 rounded-lg duration-300 hover:bg-blue-600 hover:text-white"
+                    to="/login"
+                    onClick={() => setOpened(false)}
+                  >
+                    <p className="font-semibold">Login</p>
+                  </Link>
+                </>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   )

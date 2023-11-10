@@ -39,12 +39,12 @@ const SignUp = () => {
   }
 
   return (
-    <div className="w-full h-full flex items-center">
+    <div className="w-full duration-300 lg:px-0 h-full flex items-center justify-center">
       <motion.form
         variants={formContainer}
         initial="hidden"
         animate="visible"
-        className="w-96 mx-auto p-14 rounded-xl bg-slate-300 dark:bg-slate-900"
+        className="lg:w-96 px-14 sm:py-7 bg-slate-300 dark:bg-slate-900 dark:border-0 rounded-xl"
       >
         <motion.div
           variants={formItem}
