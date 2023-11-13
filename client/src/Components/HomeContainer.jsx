@@ -1,6 +1,5 @@
 import React, { useEffect } from "react"
 import io from "socket.io-client"
-import useCustomContext from "./../Context/CustomContext"
 import useHomeContainer from "../Hooks/useHomeContainer"
 import Sidebar from "./Sidebar"
 import Chat from "./Chat"
