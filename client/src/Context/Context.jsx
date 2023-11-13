@@ -6,7 +6,6 @@ const Context = createContext()
 const ContextProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null)
   const [darkMode, setDarkMode] = useState(false)
-  const [searchResult, setSearchResult] = useState(null)
 
   useEffect(() => {
     const token = JSON.parse(sessionStorage.getItem("token"))
@@ -38,8 +37,6 @@ const ContextProvider = ({ children }) => {
     <Context.Provider
       value={{
         userInfo,
-        searchResult,
-        setSearchResult,
         setUserInfo,
         checkErrorMsg,
         darkMode,
