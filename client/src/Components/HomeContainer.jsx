@@ -10,15 +10,14 @@ import { sidebarContainer, sidebarItem } from "../Variants/animationVariants"
 const socket = io.connect("http://localhost:3000")
 
 const HomeContainer = () => {
-  const { userInfo } = useCustomContext()
+  const { userInfo, searchResult, setSearchResult } = useCustomContext()
   const [error, setError] = useState(null)
   const [searchInput, setSearchInput] = useState("")
-  const [searchResult, setSearchResult] = useState(null)
-  const [chats, setChats] = useState(null)
   const [selectedChat, setSelectedChat] = useState(null)
-  const [otherUsers, setOtherUsers] = useState(null)
   const [message, setMessage] = useState("")
   const [messagesArray, setMessagesArray] = useState([])
+  const [otherUsers, setOtherUsers] = useState(null)
+  const [chats, setChats] = useState(null)
 
   useEffect(() => {
     socket.on("receiveMessage", (data) => {
