@@ -6,8 +6,6 @@ import Chat from "./Chat"
 const HomeContainer = () => {
   const { selectedChat } = useHomeContainer()
 
-  console.log(selectedChat)
-
   return (
     <div className="w-full h-[calc(100%-80px)] rounded-b-2xl flex">
       <Sidebar />
