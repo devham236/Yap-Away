@@ -1,25 +1,16 @@
-import React, { useEffect } from "react"
-import io from "socket.io-client"
+import React from "react"
 import useHomeContainer from "../Hooks/useHomeContainer"
 import Sidebar from "./Sidebar"
 import Chat from "./Chat"
 
-const socket = io.connect("http://localhost:3000")
-
 const HomeContainer = () => {
-  const { selectedChat, setMessagesArray } = useHomeContainer()
+  const { selectedChat } = useHomeContainer()
 
-  useEffect(() => {
-    socket.on("receiveMessage", (data) => {
-      setMessagesArray((prev) => [...prev, data])
-    })
-  }, [socket])
+  console.log(selectedChat)
 
   return (
     <div className="w-full h-[calc(100%-80px)] rounded-b-2xl flex">
-      {/*Sidebar*/}
       <Sidebar />
-      {/*Chat */}
       {selectedChat ? (
         <Chat />
       ) : (

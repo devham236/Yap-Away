@@ -6,6 +6,8 @@ const Context = createContext()
 const ContextProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null)
   const [darkMode, setDarkMode] = useState(false)
+  const [selectedChat, setSelectedChat] = useState(null)
+  const [opened, setOpened] = useState(false)
 
   useEffect(() => {
     const token = JSON.parse(sessionStorage.getItem("token"))
@@ -37,9 +39,13 @@ const ContextProvider = ({ children }) => {
     <Context.Provider
       value={{
         userInfo,
+        darkMode,
+        selectedChat,
+        opened,
+        setOpened,
+        setSelectedChat,
         setUserInfo,
         checkErrorMsg,
-        darkMode,
         setDarkMode,
         toggleDarkMode,
       }}

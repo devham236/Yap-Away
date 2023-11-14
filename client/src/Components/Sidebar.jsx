@@ -2,21 +2,25 @@ import { AnimatePresence, motion } from "framer-motion"
 import React from "react"
 import useHomeContainer from "../Hooks/useHomeContainer"
 import { sidebarContainer, sidebarItem } from "../Variants/animationVariants"
+import useCustomContext from "../Context/CustomContext"
 
 const Sidebar = () => {
+  const { userInfo, setOpened, setSelectedChat } = useCustomContext()
   const {
     setSearchInput,
     setError,
     joinRoom,
     searchUser,
+    createChat,
+    deleteChat,
     otherUsers,
     searchResult,
     error,
     chats,
   } = useHomeContainer()
   return (
-    <div className="lg:w-[30%] lg:block sm:hidden border-r-2 border-slate-200 dark-border max-h-full overflow-auto">
-      <div className="w-full h-16 border-b-[2px] border-slate-200 dark-border flex items-center justify-between p-3">
+    <div className="lg:w-[30%] lg:block sm:w-full sm:border-r-0 lg:border-r-2 lg:border-slate-200 dark-border max-h-full overflow-auto">
+      <div className="w-full h-16 border-b-[2px] border-slate-200 dark-border flex items-center justify-between lg:p-3 sm:p-0">
         <input
           type="text"
           placeholder="Search for Users..."
@@ -48,7 +52,7 @@ const Sidebar = () => {
       >
         <motion.div
           variants={sidebarItem}
-          className="w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center"
+          className="w-full h-[80px] lg:p-3 sm:p-0 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center"
         >
           <h1 className="font-bold text-lg dark:text-white">
             Search <span className="text-blue-600">Results:</span>
@@ -59,7 +63,7 @@ const Sidebar = () => {
             <motion.div
               variants={sidebarItem}
               key={user._id}
-              className={`w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 flex items-center`}
+              className={`w-full h-[80px] lg:p-3 sm:p-0 border-b-2 cursor-pointer border-slate-200 flex items-center`}
             >
               <div
                 style={{ backgroundColor: user.bgColor }}
@@ -88,14 +92,14 @@ const Sidebar = () => {
         {error && (
           <motion.div
             variants={sidebarItem}
-            className="w-full h-[80px] duration-300 p-3 border-b-2 cursor-pointer border-slate-200 flex items-center"
+            className="w-full h-[80px] duration-300 lg:p-3 sm:p-0 border-b-2 cursor-pointer border-slate-200 flex items-center"
           >
             <p className="italic text-slate-500">{error}...</p>
           </motion.div>
         )}
         <motion.div
           variants={sidebarItem}
-          className="w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center"
+          className="w-full h-[80px] lg:p-3 sm:p-0 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center"
         >
           <h1 className="font-bold text-lg dark:text-white">
             Your <span className="text-blue-600">Chats:</span>
@@ -109,7 +113,7 @@ const Sidebar = () => {
                 exit={{ opacity: 0 }}
                 onClick={() => joinRoom(chat)}
                 key={chat._id}
-                className={`w-full h-[80px] hover:bg-slate-100 dark:hover:bg-slate-900 duration-300 p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center`}
+                className={`w-full h-[80px] hover:bg-slate-100 dark:hover:bg-slate-900 duration-300 lg:p-3 sm:py-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center`}
               >
                 <div className="w-[70px] h-full relative">
                   {chat.participants.map((p, i) => (
@@ -163,7 +167,7 @@ const Sidebar = () => {
         </AnimatePresence>
         <motion.div
           variants={sidebarItem}
-          className="w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center"
+          className="w-full h-[80px] lg:p-3 sm:p-0 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center"
         >
           <h1 className="font-bold text-lg dark:text-white">
             Other <span className="text-blue-600">Users:</span>
@@ -174,7 +178,7 @@ const Sidebar = () => {
             <motion.div
               variants={sidebarItem}
               key={user._id}
-              className={`w-full h-[80px] p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center`}
+              className={`w-full h-[80px] sm:py-3 lg:p-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center`}
             >
               <div
                 style={{ backgroundColor: user.bgColor }}

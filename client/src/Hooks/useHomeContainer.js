@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react"
 import axios from "./../Config/axiosConfig"
 import useCustomContext from "../Context/CustomContext"
+import io from "socket.io-client"
+
+const socket = io.connect("http://localhost:3000")
 
 const useHomeContainer = () => {
-  const { userInfo } = useCustomContext()
+  const { userInfo, selectedChat, setSelectedChat } = useCustomContext()
   const [chats, setChats] = useState(null)
   const [otherUsers, setOtherUsers] = useState(null)
   const [searchResult, setSearchResult] = useState(null)
   const [error, setError] = useState(null)
   const [searchInput, setSearchInput] = useState("")
-  const [selectedChat, setSelectedChat] = useState(null)
   const [message, setMessage] = useState("")
   const [messagesArray, setMessagesArray] = useState([])
 
@@ -22,6 +24,12 @@ const useHomeContainer = () => {
     }
     getChats()
   }, [])
+
+  useEffect(() => {
+    socket.on("receiveMessage", (data) => {
+      setMessagesArray((prev) => [...prev, data])
+    })
+  }, [socket])
 
   useEffect(() => {
     const getUsers = async () => {
@@ -50,15 +58,6 @@ const useHomeContainer = () => {
         console.log(error)
         setError(error.response.data.message)
       }
-    }
-  }
-
-  const joinRoom = async (chat) => {
-    if (!selectedChat) {
-      await socket.emit("joinRoom", chat.roomName)
-      setSelectedChat(chat)
-    } else {
-      console.error("No chats")
     }
   }
 
@@ -104,15 +103,24 @@ const useHomeContainer = () => {
     }
   }
 
+  const joinRoom = async (chat) => {
+    if (!selectedChat) {
+      await socket.emit("joinRoom", chat.roomName)
+      setSelectedChat(chat)
+    } else {
+      console.error("No chats")
+    }
+  }
+
   return {
     chats,
     searchInput,
     messagesArray,
     message,
     otherUsers,
-    selectedChat,
     error,
     searchResult,
+    joinRoom,
     setMessagesArray,
     setMessage,
     setSearchInput,
@@ -124,7 +132,6 @@ const useHomeContainer = () => {
     setOtherUsers,
     setSearchResult,
     deleteChat,
-    joinRoom,
   }
 }
 

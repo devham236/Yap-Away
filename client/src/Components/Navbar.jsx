@@ -2,10 +2,11 @@ import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import useCustomContext from "../Context/CustomContext"
 import { AnimatePresence, motion } from "framer-motion"
+import Sidebar from "./Sidebar"
 
 const Navbar = () => {
-  const { userInfo, setUserInfo, darkMode, toggleDarkMode } = useCustomContext()
-  const [opened, setOpened] = useState(true)
+  const { userInfo, setUserInfo, darkMode, toggleDarkMode, opened, setOpened } =
+    useCustomContext()
   const navigate = useNavigate()
 
   const logout = () => {
@@ -89,7 +90,7 @@ const Navbar = () => {
             x: 0,
             opacity: 1,
           }}
-          className="flex items-center sm:hidden lg:block"
+          className="lg:flex items-center sm:hidden"
         >
           {userInfo ? (
             <button
@@ -164,16 +165,7 @@ const Navbar = () => {
                     </button>
                   </div>
 
-                  <div className="w-full h-16 border-b-[2px] border-slate-200 dark-border flex items-center justify-between ">
-                    <input
-                      type="text"
-                      placeholder="Search for Users..."
-                      className="bg-transparent outline-none"
-                    />
-                    <button className="px-4 py-2 rounded-lg bg-slate-200 font-bold hover:bg-blue-600 dark:bg-slate-900 dark:text-white hover:text-white duration-300 dark-button">
-                      Search
-                    </button>
-                  </div>
+                  <Sidebar />
                 </div>
               ) : (
                 <>

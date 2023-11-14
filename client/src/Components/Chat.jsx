@@ -3,9 +3,11 @@ import { motion } from "framer-motion"
 import ScrollToBottom from "react-scroll-to-bottom"
 import Message from "./Message"
 import useHomeContainer from "../Hooks/useHomeContainer"
+import useCustomContext from "../Context/CustomContext"
 
 const Chat = () => {
-  const { messagesArray, setMessage, sendMessage } = useHomeContainer()
+  const { messagesArray, setMessage, sendMessage, message } = useHomeContainer()
+  const { selectedChat } = useCustomContext()
 
   return (
     <motion.div
