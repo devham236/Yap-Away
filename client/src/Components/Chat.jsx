@@ -17,7 +17,7 @@ const Chat = () => {
         opacity: 1,
         transition: { duration: 0.3, type: "spring" },
       }}
-      className="w-[70%] h-full"
+      className="lg:w-[70%] sm:w-full h-full"
     >
       <div className="w-full h-[calc(100%-80px)]">
         <div className="w-full h-16 border-b-[1px] border-slate-200 dark-border p-3 flex items-center">

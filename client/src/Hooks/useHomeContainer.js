@@ -106,7 +106,6 @@ const useHomeContainer = () => {
   const joinRoom = async (chat) => {
     if (!selectedChat) {
       await socket.emit("joinRoom", chat.roomName)
-      setSelectedChat(chat)
     } else {
       console.error("No chats")
     }

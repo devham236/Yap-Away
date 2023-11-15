@@ -1,10 +1,10 @@
 import React from "react"
-import useHomeContainer from "../Hooks/useHomeContainer"
 import Sidebar from "./Sidebar"
 import Chat from "./Chat"
+import useCustomContext from "../Context/CustomContext"
 
 const HomeContainer = () => {
-  const { selectedChat } = useHomeContainer()
+  const { selectedChat, opened } = useCustomContext()
 
   return (
     <div className="w-full h-[calc(100%-80px)] rounded-b-2xl flex">

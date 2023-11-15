@@ -5,7 +5,8 @@ import { sidebarContainer, sidebarItem } from "../Variants/animationVariants"
 import useCustomContext from "../Context/CustomContext"
 
 const Sidebar = () => {
-  const { userInfo, setOpened, setSelectedChat } = useCustomContext()
+  const { userInfo, setOpened, setSelectedChat, selectedChat, opened } =
+    useCustomContext()
   const {
     setSearchInput,
     setError,
@@ -19,7 +20,11 @@ const Sidebar = () => {
     chats,
   } = useHomeContainer()
   return (
-    <div className="lg:w-[30%] lg:block sm:w-full sm:border-r-0 lg:border-r-2 lg:border-slate-200 dark-border max-h-full overflow-auto">
+    <div
+      className={`lg:w-[30%] lg:block sm:${
+        selectedChat && !opened ? "hidden" : "block"
+      } sm:w-full sm:border-r-0 lg:border-r-2 lg:border-slate-200 dark-border max-h-full overflow-auto`}
+    >
       <div className="w-full h-16 border-b-[2px] border-slate-200 dark-border flex items-center justify-between lg:p-3 sm:p-0">
         <input
           type="text"
@@ -63,7 +68,7 @@ const Sidebar = () => {
             <motion.div
               variants={sidebarItem}
               key={user._id}
-              className={`w-full h-[80px] lg:p-3 sm:p-0 border-b-2 cursor-pointer border-slate-200 flex items-center`}
+              className={`w-full h-[80px] lg:p-3 sm:py-3 border-b-2 cursor-pointer border-slate-200 flex items-center`}
             >
               <div
                 style={{ backgroundColor: user.bgColor }}
@@ -111,7 +116,11 @@ const Sidebar = () => {
               <motion.div
                 variants={sidebarItem}
                 exit={{ opacity: 0 }}
-                onClick={() => joinRoom(chat)}
+                onClick={() => {
+                  joinRoom(chat)
+                  setSelectedChat(chat)
+                  setOpened(false)
+                }}
                 key={chat._id}
                 className={`w-full h-[80px] hover:bg-slate-100 dark:hover:bg-slate-900 duration-300 lg:p-3 sm:py-3 border-b-2 cursor-pointer border-slate-200 dark-border flex items-center`}
               >
