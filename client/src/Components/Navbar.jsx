@@ -122,7 +122,7 @@ const Navbar = () => {
           onClick={() => {
             setOpened(!opened)
           }}
-          className="p-3 rounded-lg bg-slate-300 dark:bg-slate-900 lg:hidden sm:flex items-center justify-center"
+          className="p-3 rounded-lg bg-slate-300 dark:bg-slate-900 lg:hidden sm:flex items-center justify-center cursor-pointer"
         >
           <i
             className={`fa-solid fa-${
