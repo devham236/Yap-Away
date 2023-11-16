@@ -172,7 +172,7 @@ const Navbar = () => {
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 100, opacity: 0 }}
-              className="absolute z-50 top-20 left-0 w-full max-h-[calc(100vh-80px)] overflow-auto bg-white sm:flex md:hidden lg:hidden flex-col items-center p-4 justify-start dark:bg-slate-700"
+              className="absolute z-50 top-20 left-0 w-full h-[calc(100vh-80px)] overflow-auto bg-white sm:flex md:hidden lg:hidden flex-col items-center p-4 justify-start dark:bg-slate-700"
             >
               {userInfo ? (
                 <div className="w-full max-h-full">
