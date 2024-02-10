@@ -2,6 +2,8 @@
 
 Welcome to Yap Away! A real-time messaging application using the popular MERN tech stack.
 
+Welcome to Yap Away! A real-time messaging application using the popular MERN tech stack.
+
 ## Demo/Preview
 
 https://github.com/devham236/chat-app/assets/90037750/038be362-f18a-4c52-b4ac-10a059675691
