@@ -1,6 +1,6 @@
-# Chat Away ✉️📬✏️
+# Yap Away ✉️📬✏️
 
-Welcome to Chat Away! A real-time messaging application using the popular MERN tech stack.
+Welcome to Yap Away! A real-time messaging application using the popular MERN tech stack.
 
 
 ## Demo/Preview
